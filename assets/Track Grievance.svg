@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35.676" height="35.675" viewBox="0 0 35.676 35.675">
+  <g id="Track_Grievance" data-name="Track Grievance" transform="translate(-4 -4)">
+    <rect id="Rectangle_1572" data-name="Rectangle 1572" width="4" height="1" transform="translate(19 12)" fill="#21be3e"/>
+    <path id="Path_72" data-name="Path 72" d="M27.36,21H23.574v1.893a.631.631,0,0,1-.631.631H20.418a.631.631,0,0,1-.631-.631V21H16v7.574H27.36Zm-5.049,6.311H21.049V26.049h1.262Zm3.787,0H23.574V26.049H26.1Z" transform="translate(-4.426 -6.271)" fill="#21be3e"/>
+    <rect id="Rectangle_1573" data-name="Rectangle 1573" width="1" height="4" transform="translate(17 12)" fill="#21be3e"/>
+    <path id="Path_73" data-name="Path 73" d="M17.254,30.508A13.254,13.254,0,1,0,4,17.254,13.254,13.254,0,0,0,17.254,30.508Zm0-25.245A11.992,11.992,0,1,1,5.262,17.254,11.992,11.992,0,0,1,17.254,5.262Z" fill="#21be3e"/>
+    <path id="Path_74" data-name="Path 74" d="M42.331,43.225l.9-.9-1.8-1.8q-.427.466-.894.894Z" transform="translate(-13.476 -13.475)" fill="#21be3e"/>
+    <path id="Path_75" data-name="Path 75" d="M18.729,29.459A10.729,10.729,0,1,0,8,18.729,10.729,10.729,0,0,0,18.729,29.459ZM11.787,13.68a1.262,1.262,0,0,1,1.262-1.262H24.41a1.262,1.262,0,0,1,1.262,1.262v10.1a1.262,1.262,0,0,1-1.262,1.262H13.049a1.262,1.262,0,0,1-1.262-1.262Z" transform="translate(-1.475 -1.475)" fill="#21be3e"/>
+    <rect id="Rectangle_1574" data-name="Rectangle 1574" width="3" height="1" transform="translate(12 12)" fill="#21be3e"/>
+    <path id="Path_76" data-name="Path 76" d="M53.649,53.649a1.893,1.893,0,0,0,0-2.677l-7.587-7.587-2.677,2.677,7.586,7.587A1.9,1.9,0,0,0,53.649,53.649Z" transform="translate(-14.528 -14.528)" fill="#21be3e"/>
+  </g>
+</svg>
