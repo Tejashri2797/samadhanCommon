@@ -38,9 +38,13 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       icon: const Icon(Icons.arrow_back_ios_new),
                       color: Colors.white,
                     ),
-                    const Text(
-                      "Contact Us",
-                      style: TextStyle(fontSize: 22, color: Colors.white),
+                       Text(
+                      "contact".tr,
+
+                      style:const TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 22,
+                          color: Colors.white),
                     ),
                   ],
                 ),
@@ -71,23 +75,22 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                        SizedBox(height:40,),
                         SvgPicture.asset('assets/Contact Us pink.svg',height: MediaQuery.of(context).size.height/9,),
                           SizedBox(height: MediaQuery.of(context).size.height/20,),
-                          const Text('If you want to know about the grievance\n'
-                              'redressal system or if you are facing any\n'
-                              'technical difficulty please call on below\n'
-                              '          phone number.Our call center\n'
-                              '          representative will help you',style: TextStyle(
-                              fontFamily: 'Montserrat-Light',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              height: 1.5
-                          ),),
+                         Padding(
+                           padding: EdgeInsets.only(left:20,right:15),
+                            child: Text('contactus_desc'.tr,style: const TextStyle(
+                                fontFamily: 'Montserrat-Medium',
+                                fontSize: 15,
+                                color: Colors.black87,
+                                height: 1.5
+                            ),),
+                          ),
 
 
 
-                    SizedBox(height: MediaQuery.of(context).size.height/20,),
+                    SizedBox(height:60),
                     Stack(
                       children:[ Container(
-                        height: 100,
+                        height: 85,
                         width: MediaQuery.of(context).size.width,
 
                         child: Center(
@@ -107,7 +110,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                       child: Text('   1800 120 8040',style: TextStyle(
                                         fontSize: 20,
                                         color: Colors.green.shade600,
-                                        fontFamily: 'Montserrat-Light',
+                                        fontFamily: 'Montserrat',
 
 
                                       ),),
@@ -120,7 +123,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                      padding: EdgeInsets.only(left: 10.0,top: 10),
                                      child: CircleAvatar(
                                       backgroundColor: Colors.green.shade400,
-                                      radius: 35,
+                                      radius: 30,
                                       child: SvgPicture.asset('assets/Call Solid.svg'),
 
                             ),

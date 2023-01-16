@@ -13,5 +13,16 @@ final TextEditingController fieldFour = TextEditingController();
 final TextEditingController fieldFive = TextEditingController();
 
 
+
+
+///Logiin Page Controller
+final TextEditingController userNameController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
+
+
+
+
+
+
 /// controller for the countDown Timer
 late CountDownController countDownController;

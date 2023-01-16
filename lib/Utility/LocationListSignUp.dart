@@ -1,25 +1,39 @@
-List<String> district = [
-  "District",
-  "Pune",
-  "Raigad",
-  "Satara",
-  "Dhule",
-  "Akola",
-  "Nagpur",
+
+List<String> postdistrict = [
+  "Select District",
+  "Osmanabad",
+  "Tuljapur",
+  "Umarga",
+  "Kalamb",
+  "Paranda",
+  "Bhum",
+  "Lohara",
+  "Washi",
 ];
-List<String> taluka = [
-  "Taluka",
-  "Maval",
-  "Baramati",
-  "Shirur",
-  "Bhor",
-  "Khed",
+String? selectdistrict;
+
+List<String> posttalukaa = [
+  "Select Taluka",
+  "Osmanabad",
+  "Tuljapur",
+  "Umarga",
+  "Kalamb",
+  "Paranda",
+  "Bhum",
+  "Lohara",
+  "Washi",
 ];
-List<String> village = [
-  "Village",
-  "Nangargaon",
-  "Kusgaon",
-  "Dongargaon",
-  "Kevare",
-  "Tungarli",
+String? selecttaluka = 'Select Taluka';
+
+List<String> postvillagee = [
+  "Select Village",
+  "Osmanabad",
+  "Tuljapur",
+  "Umarga",
+  "Kalamb",
+  "Paranda",
+  "Bhum",
+  "Lohara",
+  "Washi",
 ];
+String? selectvillage = 'Select Village';

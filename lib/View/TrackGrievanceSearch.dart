@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../View_mdal/TrackGrievanceByIDVM.dart';
+import '../View_mdal/TrackGrievanceSearchVM.dart';
+import '../View_mdal/track_grievance_list_vm.dart';
 
 
-class TrackGrievanceSearch extends StatefulWidget {
-  const TrackGrievanceSearch({Key? key}) : super(key: key);
+
+class TrackGrievanceSearchRepo extends StatefulWidget {
+  const TrackGrievanceSearchRepo({Key? key}) : super(key: key);
 
   @override
-  State<TrackGrievanceSearch> createState() => _TrackGrievanceSearchState();
+  State<TrackGrievanceSearchRepo> createState() => _TrackGrievanceSearchRepoState();
 }
 
-class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
+final trackGrievanceByID =Get.put(TrackGrievanceByIDVM());
+final trackGrievanceSearch =Get.put(TrackGrievanceSearchVM());
+class _TrackGrievanceSearchRepoState extends State<TrackGrievanceSearchRepo> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -176,8 +182,8 @@ class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
                                       mainAxisAlignment:
                                       MainAxisAlignment
                                           .spaceAround,
-                                      children: const [
-                                        Text("1",
+                                      children:  [
+                                        const Text("1",
                                             style: TextStyle(
                                                 fontSize: 30,
                                                 color: Colors.white,
@@ -188,8 +194,8 @@ class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text("22/10/2022",
-                                            style: TextStyle(
+                                        Text(date3!,
+                                            style: const TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.white,
                                                 fontWeight:
@@ -236,7 +242,8 @@ class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
                                                       'Montserrat-Regular')),
                                               const Spacer(),
                                               GestureDetector(
-                                                onTap: (){
+                                                onTap: () async {
+                                                  await trackGrievanceByID.getGrievanceList(GriId.toString());
                                                   Get.toNamed("/TrackGrievanceViewPage");
                                                 },
                                                 child: const Text(
@@ -273,8 +280,8 @@ class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
                                           const SizedBox(
                                             height: 2,
                                           ),
-                                          const Text(
-                                            "OS/20221007-1",
+                                     Text(
+                                            GrievanceNo!,
                                             style: TextStyle(
                                                 height: 1,
                                                 fontSize: 16,
@@ -302,9 +309,10 @@ class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
                                           const SizedBox(
                                             height: 2,
                                           ),
-                                          const Text(
-                                            "Municipal Corporation",
-                                            style: TextStyle(
+                                          ( Department == null)? Text('')
+                                          :Text(
+                                            Department!,
+                                            style: const TextStyle(
                                                 height: 1,
                                                 fontSize: 16,
                                                 fontWeight:
@@ -331,8 +339,9 @@ class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
                                           const SizedBox(
                                             height: 2,
                                           ),
-                                          Text(
-                                            "Accepted",
+                                         ( Status == null)? Text('')
+                                          :Text(
+                                          Status!,
                                             style: TextStyle(
                                                 height: 1,
                                                 fontSize: 16,
@@ -356,28 +365,7 @@ class _TrackGrievanceSearchState extends State<TrackGrievanceSearch> {
                       ),
                     ),
                   ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 0.5,
-                  alignment: Alignment.bottomCenter,
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Powered By : ",
-                        style: TextStyle(
-                            color: Colors.black45,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'Montserrat'),
-                      ),
-                      Image(
-                        image: AssetImage("assets/img.png"),
-                        height: 20,
-                      )
-                    ],
-                  ),
-                )
+
               ],
             ),
           ),

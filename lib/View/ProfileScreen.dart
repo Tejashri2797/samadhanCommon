@@ -1,8 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../Repository/otppost_repository.dart';
 import '../Utility/DashboardCommonWidget.dart';
+import '../View_mdal/ProfileVM.dart';
+import '../View_mdal/logout_viewmodal.dart';
+import 'OTPTabbar.dart';
+
 
 
 class ProfileScreen extends StatefulWidget {
@@ -12,6 +18,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+final logoutViewModal= LogoutViewModal();
+final profileVM= Get.put(ProfileVM());
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
@@ -27,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding:
             EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.3),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color:Colors.white,
               ),
             ),
@@ -69,33 +77,109 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: SvgPicture.asset('assets/edit.svg',height: 16,width: 16,)
             ),
                 ),
-                    const Text('Mukul Joshi',
+                   Text(profileName!,
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'Montserrat-Medium'
                     ),),
                     SizedBox(height:MediaQuery.of(context).size.height/25 ,),
-                    profileListTile(),
+                    profileListTile(
+                      iconImagePath: 'assets/Phone.svg',
+                      iconImageText: MobileNumber!,
+                    ),
                     profileListTile(
                         iconImagePath: 'assets/email.svg',
-                        iconImageText: 'mukeshjoshi@gmail.com',
+                        iconImageText: Email!,
                     ),
                     profileListTile(
                       iconImagePath: 'assets/location.svg',
-                      iconImageText: 'Osmanabad',
+                      iconImageText: district!,
                     ),
                     profileListTile(
                       iconImagePath: 'assets/District.svg',
-                      iconImageText: 'Tuljapur',
+                      iconImageText: taluka!,
                     ),
                     profileListTile(
                       iconImagePath: 'assets/Village.svg',
-                      iconImageText: 'Ambewadi',
+                      iconImageText:village!,
                     ),
                     const Spacer(),
-                    profileListTile(
-                      iconImagePath: 'assets/logout pink.svg',
-                      iconImageText: 'Logout',
+                    InkWell(
+                      onTap: () async {
+                        showDialog(
+                            context: context,
+                            builder: (_) =>
+                                AlertDialog(
+                                  title: Container(
+                                    height: 170,
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width / 0.8,
+                                    child: Column(
+                                      children: [
+
+
+                                        Center(
+                                          child: SvgPicture.asset(
+                                            'assets/Notification Alert.svg',
+                                            height: 50,
+                                          ),
+                                        ),
+                                        SizedBox(height: 30,),
+                                        Text(
+                                          "logoutAlert".tr,
+                                          style:const TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontSize: 16,
+                                              color: Colors.black),
+                                        ),
+                                        SizedBox(height: 20,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .spaceEvenly,
+                                          children: [
+                                            MaterialButton(
+                                              height: 40,
+                                              minWidth: 100,
+                                              color: Color(0xFFb83058),
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              child:  Text(
+                                                'n'.tr,
+                                                style:const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            MaterialButton(
+                                              height: 40,
+                                              minWidth: 100,
+                                              color: Color(0xFFb83058),
+                                              onPressed: () async {
+                                                await logoutViewModal.logoutCurrentUser(int.parse("${data.read('profileId')}"));
+                                                data.remove('profileId');
+                                                PostOTP.otpList2.clear();
+                                                Get.offAllNamed('/loginAndSignUp');
+                                                },
+                                              child: Text(
+                                                'y'.tr,
+                                                style:  const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ));
+
+                      },
+                      child: profileListTile(
+                        iconImagePath: 'assets/logout pink.svg',
+                        iconImageText: 'logout'.tr,
+                      ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height/50,)
 
@@ -122,12 +206,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap:(){
                    Navigator.pop(context);
                   },
-                    child: Icon(Icons.arrow_back_ios_sharp,size: 25, color:Colors.white,)),
+                    child: const Icon(Icons.arrow_back_ios_sharp,size: 25, color:Colors.white,)),
                 SizedBox(width: MediaQuery.of(context).size.width/25,),
-                Text('Profile',style: TextStyle(
+               Text('profile'.tr,style:  const TextStyle(
                     color:Colors.white,
                   fontSize: 20,
-                  fontFamily: 'Montserrat-Light'
+                  fontFamily: 'Montserrat'
                 ),)
               ],
             ),

@@ -11,9 +11,10 @@ class OtpInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
-      width: 50,
+      height: 45,
+      width: 45,
       child: TextField(
+
         style: const TextStyle(
             color: Color(0xFFb83058),
             fontWeight: FontWeight.bold,

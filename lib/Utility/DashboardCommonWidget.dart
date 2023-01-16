@@ -8,18 +8,18 @@ Widget drawerBox(
       leading: SvgPicture.asset(
         icon,
         //scale: 0.8,
-        height: 30,
-        color: Colors.grey.shade700,
+        height: 25,
+        color: Color(0xFFb83058)
       ),
       title: Text(
         section,
         style: const TextStyle(
-            fontSize: 18,
-            color: Colors.black45,
-            fontFamily: 'Montserrat-Medium',
-            fontWeight: FontWeight.w500),
+            fontSize: 15,
+            color: Colors.black,
+            fontFamily: 'Montserrat',
+           fontWeight: FontWeight.w500,
       ),
-      );
+      ));
 
 Widget profileListTile(
         {String iconImagePath = 'assets/Phone.svg',
@@ -27,15 +27,15 @@ Widget profileListTile(
     ListTile(
       leading: SvgPicture.asset(
         iconImagePath,
-        height: 20,
-        width: 20,
+        height: 18,
+        width: 18,
       ),
       title: Text(
         iconImageText,
         style: TextStyle(
-            fontSize: 17,
+            fontSize: 15,
             color: Colors.grey.shade700,
-            fontFamily: 'Montserrat-Light',
+            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w500),
       ),
     );
@@ -74,9 +74,9 @@ Widget dashboardGridContainer(
             Text(
               imageIconText,
               style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontFamily: 'Montserrat-Medium',
-                  fontSize: 18),
+                  color: Colors.black,
+                  fontFamily: 'Montserrat-',
+                  fontSize: 16),
             )
           ],
         ),
