@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:samadhan/View/DashboardScreen.dart';
 
@@ -21,6 +20,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Stack(
         children: [
           Container(
@@ -32,7 +32,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.3),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color:Colors.white,
               ),
             ),
@@ -57,72 +57,74 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child:Obx(()=>(notificationViewModal.isLoading.value == true) ?Text('')
-                  : ListView.separated(
-                    itemCount: notificatinDetailsVM.notifictn.length,
-                      itemBuilder: (context,index)=>Padding(
-                        padding: const EdgeInsets.only(left: 7, right: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade200,
-                                  // blurStyle:BlurStyle.outer,
-                                  // blurRadius: 5,
-                                  spreadRadius: 1,
-                                  offset: const Offset(0, 2)),
-                            ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.black12,width: 2)
-                          ),
-                          child: ListTile(
-                            leading: SvgPicture.asset(
-                                'assets/Notification Alert.svg'),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children:  [
-                                SizedBox(
-                                  height: 10,
-                                ),
-
-                                Text(
-                                  notificatinDetailsVM.notifictn[index].description!,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Montserrat-Regular',
-                                      color: Colors.grey.shade600
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(( notificatinDetailsVM.notifictn[index].notificationDate).toString()!)),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.grey.shade600
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-
-                                // SizedBox(height: MediaQuery.of(context).size.height/5,),
+                child: Obx(()=>(notificatinDetailsVM.isLoading.value == true)? Text('')
+                 : ListView.separated(
+                      itemCount: notificatinDetailsVM.notificationList.length,
+                        itemBuilder: (context,index)=>Padding(
+                          padding: const EdgeInsets.only(left: 7, right: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    // blurStyle:BlurStyle.outer,
+                                    // blurRadius: 5,
+                                    spreadRadius: 1,
+                                    offset: const Offset(0, 2)),
                               ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(color: Colors.black12,width: 2)
+                            ),
+                            child: ListTile(
+                              leading: SvgPicture.asset(
+                                  'assets/Notification Alert.svg'),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children:  [
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+
+                                  Text(
+                                    notificatinDetailsVM.notificationList[index].description!,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Montserrat-Regular',
+                                        color: Colors.grey.shade600
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(( notificatinDetailsVM.notificationList[index].notificationDate).toString())),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Montserrat',
+                                        color: Colors.grey.shade600
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+
+                                  // SizedBox(height: MediaQuery.of(context).size.height/5,),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ), separatorBuilder: (BuildContext context, int index) {
-                      return const Divider(
-                      color: Colors.white,
-                        height: 20,
-                      );
-                  },
-                  ),
+                    separatorBuilder: (BuildContext context, int index) {
+                        return const Divider(
+                        color: Colors.white,
+                          height: 20,
+                        );
+                    },
+                    ),
+                ),
                 )
             ),
-          ),
+
           Positioned(
             top: 50,
             left: 20,

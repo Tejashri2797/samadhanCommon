@@ -7,6 +7,7 @@ import '../Repository/officer_login_repo.dart';
 import 'otp_viewmodal.dart';
 
 int? officerId;
+int? subUserTypeId;
 String? officerName;
 class OfficerLoginVM extends GetxController{
   List<OfficerLoginModal>  officerDetails=[];
@@ -28,6 +29,7 @@ class OfficerLoginVM extends GetxController{
     officerDetails.forEach((element) {
       officerId=element.id;
       officerName=element.name;
+      subUserTypeId=element.subUserTypeId;
     });
 
 

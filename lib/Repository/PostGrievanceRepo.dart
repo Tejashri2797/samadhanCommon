@@ -30,8 +30,7 @@ class PostGrievanceRepo {
       List<CitizenGrievanceImage> citizenGrievanceImages,
       )  async {
 
-    Uri uri= Uri.http("samadhan-api.mahamining.com",
-        "/samdhan/Grievance_App/PostGrievance");
+    Uri uri= Uri.http("samadhan-api.mahamining.com","samdhan/Grievance_App/PostGrievance");
 
     var data = jsonEncode({
       "id": id,
@@ -50,9 +49,7 @@ class PostGrievanceRepo {
       "otherCitizenAddress": otherCitizenAddress,
       "createdBy": createdBy,
       "modifiedBy": modifiedBy,
-      "citizenGrievanceImages": List<dynamic>.from(
-          citizenGrievanceImages!.map((x) => x.toJson())
-      ),
+      "citizenGrievanceImages": citizenGrievanceImages
 
       //required parameter
     });
@@ -68,7 +65,7 @@ class PostGrievanceRepo {
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
           });
-print(request.statusCode);
+  print(request.statusCode);
     if (request.statusCode == 200) {
       print(data);
       print(request.statusCode);

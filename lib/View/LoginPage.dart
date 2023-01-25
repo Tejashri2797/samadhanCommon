@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Repository/officer_login_repo.dart';
 import '../Utility/CommonString.dart';
@@ -9,7 +11,9 @@ import '../Utility/snack_bar.dart';
 import '../View_mdal/PieChartVM.dart';
 import '../View_mdal/officer_login_vm.dart';
 
-
+bool officerLogin= false;
+var officerData =GetStorage();
+final picChartVM = Get.put(PicChartVM());
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -17,7 +21,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 final officerLoginVM=Get.put(OfficerLoginVM());
-final picChartVMLogin = Get.put(PicChartVM());
+
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
@@ -236,9 +240,25 @@ class _LoginPageState extends State<LoginPage> {
                 child: GestureDetector(
                   onTap: () async {
                     await officerLoginVM.getOfficerDetails(userNameController.text, passwordController.text);
-                    (officerLoginVM.officerDetails.isEmpty)?toastMessage("$message"):{
-                     await picChartVMLogin.chartDetails(officerId!.toString(),"",""),
-                    Get.toNamed('/OfficerDashboard')};
+                    if(userNameController.text == ""){
+                      toastMessage("name_missing_string".tr);
+                    }
+                    if( passwordController.text == ""){
+                    toastMessage("password_missing_string".tr);
+                    }
+
+                    else if(officerLoginVM.officerDetails.isEmpty) {
+                      toastMessage("$message");
+                    }
+
+                    else{
+                      officerData.write('officerId',officerId );
+                      officerData.write('officerName',officerName );
+                      SharedPreferences pref= await SharedPreferences.getInstance();
+                      pref.setString('login', subUserTypeId.toString());
+                      picChartVM.chartDetails("1", "", "");
+                      Get.offAndToNamed('/OfficerDashboard');
+                    }
                   },
                   child: CircleAvatar(
                     radius: 30,

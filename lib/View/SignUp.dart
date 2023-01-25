@@ -14,10 +14,11 @@ import '../View_mdal/taluka_viewmodal.dart';
 import '../View_mdal/vilaage_viewmoda.dart';
 
 final districtViewModal = Get.put(DistrictViewModal());
+final talukaViewModal = Get.put(TalukaViewModal());
 final villageViewModal = Get.put(VillageViewModal());
 final validationViewModal = Get.put(AllValidation());
 final otpViewModal = Get.put(OTPViewModal());
-final talukaViewModal = Get.put(TalukaViewModal());
+
 GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
 class SignUp extends StatefulWidget {
@@ -32,7 +33,7 @@ String? selectedDistrictValue;
 String? selectedTalukaValue;
 String? selectedVillageValue;
 int id = 1;
-int userTypeId = 1;
+int userTypeId = 0;
 int deviceTypeId = 1;
 String talSelected = "1";
 int? count;
@@ -43,6 +44,17 @@ class _SignUpState extends State<SignUp> {
     // TODO: implement initState
 
     super.initState();
+    talukaViewModal.talukaList.clear();
+    districtViewModal.districtList.clear();
+    districtViewModal.isLoading.value=true;
+    talukaViewModal.isLoading.value=true;
+    villageViewModal.villageList.clear();
+    villageViewModal.isLoading.value = true;
+     talukaViewModal.getAllTaluka();
+     districtViewModal.getAllDistrict();
+     selectedDistrictValue=null;
+     selectedTalukaValue= null;
+     selectedVillageValue= null;
 
 
 

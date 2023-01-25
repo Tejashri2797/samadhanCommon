@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +17,7 @@ import '../View_mdal/nature_viewModal.dart';
 import '../View_mdal/taluka_viewmodal.dart';
 import '../View_mdal/vilaage_viewmoda.dart';
 import 'OTPTabbar.dart';
+import 'package:http/http.dart'as http;
 
 TextEditingController description = TextEditingController();
 
@@ -28,7 +32,7 @@ class PostGrievance1 extends StatefulWidget {
 
 
 final postGrievanceVM = Get.put(PostGrievanceVM());
-
+var  imageLink ;
 String? selectedDistrictValue;
 String? selectedNatureValue;
 String? selectedTalukaValueG;
@@ -39,11 +43,69 @@ List<CitizenGrievanceImage> imagesDoc = [];
 
 
 class _PostGrievance1State extends State<PostGrievance1> {
+  File? image;
+  String fileName = '';
+  Uint8List? imgBytes;
+
+  Future uploadFileOrDocs()async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(
+        'http://samadhan-api.mahamining.com/samadhan/documents/UplodFile')
+    );
+
+    request.fields['FolderName'] = 'Rohan';
+    request.fields['DocumentType'] = 'jpg';
+    request.files.add(await http.MultipartFile.fromPath(
+        'UploadDocPath', image!.path
+    ),
+    );
+    var response = await request.send();
+    if(response.statusCode== 200){
+
+      final res = await http.Response.fromStream(response);
+      print(res.body);
+      Map temp = json.decode(res.body);
+      imageLink = temp['responseData'];
+      print(imageLink);
+      imagesDoc.add(CitizenGrievanceImage(
+          grievanceId:0,
+          docname: fileName,
+          docpath: "$imageLink",
+          modifiedBy: 1,
+          createdBy: int.parse(data.read('profileId')),
+          sortOrder: 1
+      ));
+
+
+
+    }
+
+
+  }
+
+
+  Future getImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      fileName = result.files.first.name;
+      image = File(result.files.single.path ?? "");
+      var t = await image?.readAsBytes();
+      imgBytes = Uint8List.fromList(t!);
+      String base64string = base64.encode(t);
+      base64.decode(base64string);
+      print(base64string);
+      setState(() {
+        setState(() {});
+      });
+
+    }
+  }
+
 
   final talukaViewModal = Get.put(TalukaViewModal());
   final districtViewModal = Get.put(DistrictViewModal());
   final villageViewModalG = Get.put(VillageViewModal());
-  final departmentViewModal = Get.put(DepartmentViewModal());
+  final departmentViewModal = Get.put(officerDepartmentVM());
   final getOfficeByIdViewModal = Get.put(GetOfficeByIdViewModal());
   final natureViewModal = Get.put(NatureViewModal());
 
@@ -87,49 +149,6 @@ class _PostGrievance1State extends State<PostGrievance1> {
     });
   }
 
-  FilePickerResult? result;
-  String fileName = '';
-  PlatformFile? pickedfile;
-  bool isLoading = false;
-
-  // File? fileToDisplay;
-
-  void pickFile() async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
-
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['png', 'jpg', 'jpeg', 'pdf'],
-        allowMultiple: false,
-      );
-
-      if (result != null) {
-        fileName = result!.files.first.name;
-        pickedfile = result!.files.first;
-        // fileToDisplay = File(pickedfile!.path.toString());
-
-        print('File name $fileName');
-        imagesDoc.add(CitizenGrievanceImage(
-          grievanceId: 101,
-          docname: "images",
-          docpath:
-              "https://samadhan-api.mahamining.com/Uploads/grievance/$fileName",
-          sortOrder: 0,
-          createdBy: 1,
-          modifiedBy: 0,
-        ));
-      }
-
-      setState(() {
-        isLoading = false;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   void initState() {
@@ -137,10 +156,10 @@ class _PostGrievance1State extends State<PostGrievance1> {
     super.initState();
     fToast.init(context);
    setState(()  {
+     selectedDistrictValue = null;
      districtViewModal.districtList.clear();
      districtViewModal.isLoading.value = true;
      districtViewModal.getAllDistrict();
-
      talukaViewModal.talukaList.clear();
      selectedTalukaValueG= null;
      talukaViewModal.isLoading.value = true;
@@ -882,18 +901,8 @@ class _PostGrievance1State extends State<PostGrievance1> {
                                                           ),
                                                           color: const Color(0xFFb83058),
                                                           onPressed: () async {
-                                                            pickFile();
-                                                            imagesDoc.add(
-                                                                CitizenGrievanceImage(
-                                                              grievanceId: 101,
-                                                              docname: "images",
-                                                              docpath:
-                                                                  "$fileName",
-                                                              sortOrder: 0,
-                                                              createdBy: 1,
-                                                              modifiedBy: 0,
-                                                            ));
-                                                          },
+                                                            getImage();
+                                                            },
                                                           child:  Text(
                                                               "pgChooseFile".tr,style: TextStyle(color: Colors.white),),)
                                                     ],
@@ -916,53 +925,37 @@ class _PostGrievance1State extends State<PostGrievance1> {
                                                       const Color(0xFFb83058),
                                                   onPressed: () async {
 
+                                                    if(selectedDistrictValue == null) {
+                                                      toastMessage(
+                                                          'district'.tr);
+                                                    }else if (selectedTalukaValueG == null) {
+                                                      toastMessage('taluka'.tr);
+                                                    }
+                                                    else if (selectedVillageValueG == null) {
+                                                      toastMessage('village'.tr);
+                                                    }
+                                                    else if (selectedDepartmentValue  == null) {
+                                                      toastMessage('deptToster'.tr);
+                                                    }
+                                                    else if  (selectedOfficeValue == null) {
+                                                      toastMessage('officeToster'.tr);
+                                                    }
+                                                    else if (selectedNatureValue == null) {
+                                                      toastMessage('natureToster'.tr);
+                                                    }
+                                                    else if  (description.text.isEmpty) {
+                                                      toastMessage('detailsToster'.tr);
+                                                    }
+                                                    else if  (fileName.toString().isEmpty) {
+                                                      toastMessage('Please choose file');
+                                                    }
+                                                    else{
 
-                                                    (selectedDistrictValue == null)?toastMessage('district'.tr):
-                                                    (selectedTalukaValueG == null)?toastMessage('taluka'.tr):
-                                                    (selectedVillageValueG == null)?toastMessage('village'.tr):
-                                                    (selectedDepartmentValue  == null)?toastMessage('deptToster'.tr):
-                                                    (selectedOfficeValue == null)?toastMessage('officeToster'.tr):
-                                                    (selectedNatureValue == null)?toastMessage('natureToster'.tr):
-                                                    (description.text.isEmpty)?toastMessage('detailsToster'.tr):
-                                                    (fileName.toString().isEmpty)?toastMessage('fileToster'.tr):
-                                                   {
-                                                      await postGrievanceVM.postGrievanceInfo(PostGrievanceModal(
-                                                          id: 0,
-                                                          grievanceNo: "",
-                                                          districtId: int.parse(
-                                                              selectedDistrictValue!),
-                                                          talukaId: int.parse(
-                                                              selectedTalukaValueG!),
-                                                          stateId: 0,
-                                                          villageId: int.parse(
-                                                              selectedVillageValueG!),
-                                                          concernDeptId: int.parse(
-                                                              selectedDepartmentValue!),
-                                                          concernOfficeId:
-                                                              int.parse(
-                                                                  selectedOfficeValue!),
-                                                          natureGrievanceId:
-                                                              int.parse(
-                                                                  selectedNatureValue!),
-                                                          grievanceDescription:
-                                                              description.text,
-                                                          isSelfGrievance: 1,
-                                                          otherCitizenName:
-                                                              "String",
-                                                          otherCitizenMobileNo:
-                                                              "String",
-                                                          otherCitizenAddress:
-                                                              "String",
-                                                          createdBy: int.parse("${data.read('profileId')}"),
-                                                          modifiedBy: 1,
-                                                          citizenGrievanceImages:
-                                                              imagesDoc)),
-
-                                                      Get.toNamed(
-                                                          "/DashBoardScreen"),
-                                                    };
-                                                    //snackBar(postGrievance).show(context);
-                                                  },
+                                                      await uploadFileOrDocs();
+                                                      await postGrievanceVM.postGrievanceInfo(PostGrievanceModal());
+                                                      Get.back();
+                                                      //snackBar(postGrievance).show(context);
+                                                  }},
                                                   child: Text(
                                                     "pgSubmit".tr,
                                                     style:const TextStyle(

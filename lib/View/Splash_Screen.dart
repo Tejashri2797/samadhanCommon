@@ -2,46 +2,57 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'DashboardScreen.dart';
-import 'LanguagePage.dart';
+import '../View_mdal/PieChartVM.dart';
 
+
+final picChartVM = Get.put(PicChartVM());
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
-Future<bool> getValue() async {
+var type;
+void getValue() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  return preferences.getBool('login') ?? false;
+ type = preferences.getString('login') ;
+  if(type == "1"){
+    Timer(const Duration(seconds:3),() async {
+
+     //await picChartVM.chartDetails("1", "", "");
+      Get.offAllNamed('/OfficerDashboard');
+    });
+
+  }
+  else if(type == "7"){
+    Timer(const Duration(seconds:3),(){
+
+      Get.offAllNamed('/DashBoardScreen');
+    });
+
+  }
+  else{
+    Timer(const Duration(seconds:3),(){
+      Get.offAllNamed('/ChooseLanguage');
+    });
+
+  }
+
 }
 class _SplashScreenState extends State<SplashScreen> {
+
+  @override
   void initState() {
+    getValue();
     super.initState();
-
-    getValue().then((value) => value ?   Timer(Duration(seconds: 3),
-            ()=>Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) => const DashBoardScreen()
-            )
-        )
-    ):  Timer(const Duration(seconds: 3),
-            ()=>Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) =>
-                ChooseLanguage()
-            )
-        )
-    ));
-
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: const Color(0xFFb83058),
       body: Column(

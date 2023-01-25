@@ -1,20 +1,17 @@
-import 'dart:async';
 
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:samadhan/Modal/otp_modal.dart';
 import 'package:samadhan/Utility/TextFieldControllerFile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Modal/signup_modal.dart';
 import '../Utility/signup_controller.dart';
 import '../Utility/snack_bar.dart';
 import '../View_mdal/otp_viewmodal.dart';
 import '../View_mdal/postotp_viewModal.dart';
 import '../View_mdal/signup_viewmodal.dart';
+import '../service/CheckInternetCon.dart';
 import 'MobileNumber.dart';
 
 import 'SignUp.dart';
@@ -25,6 +22,7 @@ class LoginAndSignUp extends StatefulWidget {
   @override
   State<LoginAndSignUp> createState() => _LoginAndSignUpState();
 }
+final GetXNetworkManager networkManager = Get.put(GetXNetworkManager());
 final ScrollController winController = ScrollController();
 SignUpViewModal? signUpViewModal;
 OTPViewModal otpViewModal = Get.put(OTPViewModal());
@@ -35,33 +33,19 @@ List<OTPModalClass> otpInfo = [];
 int selectedIndex = 0;
 
 class _LoginAndSignUpState extends State<LoginAndSignUp> {
-  TabController? _tabController;
-  ScrollController _scrollController = ScrollController();
+
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fToast.init(context);
-    _scrollController.addListener(() {
-      if (_scrollController.offset < 40) {
-        setState(() {
-          signupFlag = 2;
-          print(signupFlag);
-        });
-      } else {
-        setState(() {
-          numberFlag = 1;
-          print(numberFlag);
-        });
-      }
-    });
+    mobileNumberController.clear();
   }
 
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +138,13 @@ class _LoginAndSignUpState extends State<LoginAndSignUp> {
                 child: Center(
                   child: GestureDetector(
                     onTap: () async {
+
+                     if (networkManager.connectionType == 0 ){
+                     setState(() {
+                       toastMessage("connectionToastMsg".tr);
+                     });
+                     }
+                     else{
                       if (selectedIndex == 0) {
                         await otpViewModal
                             .getOTPInformation(mobileNumberController.text);
@@ -165,7 +156,7 @@ class _LoginAndSignUpState extends State<LoginAndSignUp> {
                                 : toastMessage("ValidNobToaster".tr);
 
                         setState(() {
-                          mobileNumberController.clear();
+
                           otpViewModal.otpList.clear();
                         });
                       } else {
@@ -216,7 +207,7 @@ class _LoginAndSignUpState extends State<LoginAndSignUp> {
                                               };
                       }
                       // otpViewModal.otpList;
-                    },
+                    }},
                     child: CircleAvatar(
                       radius: 30,
                       backgroundColor: Colors.white,

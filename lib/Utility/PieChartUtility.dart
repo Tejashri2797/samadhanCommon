@@ -1,22 +1,18 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../View_mdal/PieChartVM.dart';
 
-
-
+final picChartVM =Get.put(PicChartVM());
 List<PieChartSectionData> showingSections() {
-  return List.generate(5, (i) {
-
-
+  return  List.generate(5, (i) {
     switch (i) {
       case 0:
         return PieChartSectionData(
 
           color: const Color(0xFF81D4FA),
-          value: count1!.toDouble(),
+          value:  count1!.toDouble(),
           title: "$count1",
           radius:40,
           titleStyle: TextStyle(
