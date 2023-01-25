@@ -19,7 +19,7 @@ class OTPViewModal extends GetxController{
   @override
   void onReady(){
     super.onReady();
-    getOTPInformation(mobileNumberController.text!);
+    //getOTPInformation(mobileNumberController.text!);
 
   }
 

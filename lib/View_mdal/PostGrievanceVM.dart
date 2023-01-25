@@ -7,9 +7,6 @@ import '../View/PostGrievance.dart';
 
 
 class PostGrievanceVM extends GetxController {
-
-   List<CitizenGrievanceImage> citizenGrievanceImages = [];
-  PostGrievanceModal postGrievanceModal = PostGrievanceModal();
   var isLoading = true.obs;
 
   @override

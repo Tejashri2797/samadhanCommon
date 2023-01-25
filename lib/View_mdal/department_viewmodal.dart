@@ -9,7 +9,7 @@ import '../Repository/DepartmentRepo.dart';
 
 DepartmentRepo departmentRepo = DepartmentRepo();
 
-class DepartmentViewModal extends GetxController{
+class officerDepartmentVM extends GetxController{
   List<DepartmentModalClass> departmentList=[];
   var isLoading = true.obs;
 

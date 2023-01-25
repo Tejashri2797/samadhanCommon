@@ -13,13 +13,8 @@ String? date1;
 class TrackGrievanceListVM extends GetxController{
   List<TrackGrievanceListModal>  grievanceList=[];
   var isLoading =true.obs;
-  @override
-  void onInit(){
-    super.onInit();
-   // getGrievanceList("${data.read('profileId')}");
-  }
 
-  getGrievanceList(String? createdBy)async{
+  trackGrievanceList(String? createdBy)async{
     var grievanceDetails =await TrackGrievanceList.grievanceListData(createdBy!);
     print(grievanceDetails);
     if(grievanceDetails != null){

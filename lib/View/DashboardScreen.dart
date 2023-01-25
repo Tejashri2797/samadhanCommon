@@ -1,17 +1,10 @@
-import 'dart:async';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:samadhan/View/TrackGrievance.dart';
-import '../View_mdal/ProfileVM.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Modal/notification_modal.dart';
-import '../Repository/getGreivance_Resolved Repo.dart';
-import '../Repository/logout_repo.dart';
-import '../Repository/notification Repo.dart';
 import '../Repository/notification Repo.dart';
 import '../Repository/otppost_repository.dart';
 import '../Utility/DashboardCommonWidget.dart';
@@ -24,13 +17,10 @@ import '../View_mdal/get_office_viewmodal.dart';
 import '../View_mdal/logout_viewmodal.dart';
 import '../View_mdal/nature_viewModal.dart';
 import '../View_mdal/notification_viewModal.dart';
-import '../View_mdal/otp_viewmodal.dart';
-import '../View_mdal/signup_viewmodal.dart';
 import '../View_mdal/submitFeedbackVM.dart';
 import '../View_mdal/taluka_viewmodal.dart';
 import '../View_mdal/track_grievance_list_vm.dart';
 import '../View_mdal/vilaage_viewmoda.dart';
-import '../main.dart';
 import 'OTPTabbar.dart';
 import 'PostGrievance.dart';
 
@@ -50,7 +40,7 @@ final profileVM = Get.put(ProfileVM());
 final trackGrievanceVMDashboard = Get.put(TrackGrievanceListVM());
 final logoutViewModal = LogoutViewModal();
 final villageViewModalG = Get.put(VillageViewModal());
-final departmentViewModal = Get.put(DepartmentViewModal());
+final departmentViewModal = Get.put(officerDepartmentVM());
 final getOfficeByIdViewModal = Get.put(GetOfficeByIdViewModal());
 final natureViewModal = Get.put(NatureViewModal());
 final submitFeedbackVM = Get.put(SubmitFeedbackVM());
@@ -73,10 +63,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     setState(() {
       profileVM.getDetails("${data.read('profileId')}");
       notificationViewModal.getallNotification("${data.read('profileId')}");
-      trackGrievanceVMDashboard.getGrievanceList("${data.read('profileId')}");
+      //trackGrievanceVMDashboard.getGrievanceList("${data.read('profileId')}");
       submitFeedbackVM.feedbackList.clear();
-      submitFeedbackVM.feedbackGrievanceList("${data.read('profileId')}");
-
+      submitFeedbackVM.isLoading.value=true;
+      districtViewModal.districtList.clear();
+      selectedDistrictValue = null;
+      districtViewModal.isLoading.value = true;
       talukaViewModal.talukaList.clear();
       selectedTalukaValueG= null;
       talukaViewModal.isLoading.value = true;
@@ -118,11 +110,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 children: [
                   Center(
                     child: UserAccountsDrawerHeader(
-                      decoration: BoxDecoration(),
-                      accountName: Center(child: Text('')),
+                      decoration: const BoxDecoration(),
+                      accountName: const Center(child: Text('')),
                       accountEmail: Text(
                         "${"hello".tr} ${data.read('profileName')}",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                             fontFamily: 'Montserrat'),
@@ -153,10 +145,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      trackGrievanceVMDashboard.grievanceList.clear();
-                      trackGrievanceVM.isLoading.value = true;
-                    await  trackGrievanceVM.getGrievanceList("${data.read('profileId')}");
-                      Get.toNamed('/TrackGrievance');
+                     setState(() {
+                       trackGrievanceVMDashboard.grievanceList.clear();
+                       trackGrievanceVMDashboard.isLoading.value = true;
+                       trackGrievanceVMDashboard.trackGrievanceList("${data.read('profileId')}");
+                       Get.toNamed('/TrackGrievance');
+                     });
                     },
                     child: drawerBox(
                         icon: 'assets/Track Grievance Grey.svg',
@@ -196,7 +190,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     height: 10,
                   ),
                   GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        SharedPreferences pref = await SharedPreferences.getInstance();
+                        pref.setBool('visit', true);
                         Get.toNamed("/ChooseLanguage");
                       },
                       child: drawerBox(
@@ -210,7 +206,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
-                                  title: Container(
+                                  title: SizedBox(
                                     height: 170,
                                     width:
                                         MediaQuery.of(context).size.width / 0.8,
@@ -222,7 +218,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             height: 50,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 30,
                                         ),
                                         Text(
@@ -232,7 +228,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                               fontSize: 16,
                                               color: Colors.black),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 20,
                                         ),
                                         Row(
@@ -242,7 +238,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             MaterialButton(
                                               height: 40,
                                               minWidth: 100,
-                                              color: Color(0xFFb83058),
+                                              color: const Color(0xFFb83058),
                                               onPressed: () {
                                                 Get.back();
                                               },
@@ -255,13 +251,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             MaterialButton(
                                               height: 40,
                                               minWidth: 100,
-                                              color: Color(0xFFb83058),
+                                              color: const Color(0xFFb83058),
                                               onPressed: () async {
+
                                                 await logoutViewModal.logoutCurrentUser(int.parse("${data.read('profileId')}"));
                                                 data.remove('profileId');
                                                 PostOTP.otpList2.clear();
-                                                Get.offAllNamed(
-                                                    '/loginAndSignUp');
+                                                SharedPreferences pref= await SharedPreferences.getInstance();
+                                                pref.remove('login');
+                                                Get.offAllNamed('/loginAndSignUp');
+
                                               },
                                               child: Text(
                                                 'y'.tr,
@@ -302,7 +301,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     left: MediaQuery.of(context).size.width / 18),
                 child: Text(
                   "${"hello".tr} ${data.read('profileName')}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontFamily: 'Montserrat'),
@@ -341,7 +340,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     children: [
                       IconButton(
                           onPressed: () async {
-                            notificatinDetailsVM.notifictn.clear();
+                            notificatinDetailsVM.notificationList.clear();
                             notificatinDetailsVM.isLoading.value = true;
                             await notificatinDetailsVM.notificationData("${data.read('profileId')}");
                             Get.toNamed("/NotificationScreen");
@@ -349,17 +348,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           icon: SvgPicture.asset('assets/Notification.svg',
                               height: 25, color: Colors.white)),
                       Padding(
-                        padding: EdgeInsets.only(top: 9.0, left: 21),
+                        padding: const EdgeInsets.only(top: 9.0, left: 21),
                         child: CircleAvatar(
                           radius: 8,
                           backgroundColor: Colors.white,
                           child: Obx(
                             () =>
                                 (notificationViewModal.isLoading.value == true)
-                                    ? Text("")
+                                    ? const Text("")
                                     : Center(
                                         child: (notificationViewModal.notificationList.isEmpty)?
-                                        Text(
+                                        const Text(
                                           '0',
                                           style: TextStyle(
                                               color: Colors.black,
@@ -367,7 +366,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         ):
                                         Text(
                                           '$isReadCount',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 13),
                                         ),
@@ -412,10 +411,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      trackGrievanceVMDashboard.grievanceList.clear();
-                      trackGrievanceVM.isLoading.value = true;
-                     await trackGrievanceVM.getGrievanceList("${data.read('profileId')}");
-                      Get.toNamed("/TrackGrievance");
+                     setState(() {
+                       trackGrievanceVMDashboard.grievanceList.clear();
+                       trackGrievanceVM.isLoading.value = true;
+                        trackGrievanceVM.trackGrievanceList("${data.read('profileId')}");
+                       Get.toNamed("/TrackGrievance");
+                     });
                     },
                     child: dashboardGridContainer(context,
                         imageIconPath: 'assets/Track Grievance.svg',
@@ -423,7 +424,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                    //  submitFeedbackVM.feedbackGrievanceList();
+                      submitFeedbackVM.feedbackList.clear();
+                      submitFeedbackVM.isLoading.value=true;
+                      submitFeedbackVM.feedbackGrievanceList("${data.read('profileId')}");
+
+                      //  submitFeedbackVM.feedbackGrievanceList();
                       Get.toNamed("/SubmitFeedback");
                     },
                     child: dashboardGridContainer(context,
@@ -454,11 +459,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 1.53),
+                  top: MediaQuery.of(context).size.height / 1.48),
               child: Container(
                   height: MediaQuery.of(context).size.height,
                   width: double.infinity,
-                  margin: EdgeInsets.only(top: 5),
+                  margin: const EdgeInsets.only(top: 5),
 
                   // color: Colors.lightBlue,
                   child: Obx(
@@ -486,13 +491,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               ),
                             ),
                           )
-                        : ListView.builder(
-                            // itemCount: resolvedViewModal.resolvedList.length,
-                            itemCount: resolvedViewModal.resolvedList.length,
-                            itemBuilder: (BuildContext context, int index) =>
+                        : CarouselSlider.builder(
+                          itemCount: resolvedViewModal.resolvedList.length,
+                            itemBuilder: (BuildContext context,int itemIndex, int pageViewitemIndex) =>
                                 Padding(
                               padding: const EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
+                                  left: 20, right: 20, bottom: 10),
                               child: Container(
                                 height:
                                     MediaQuery.of(context).size.height / 3.6,
@@ -500,7 +504,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 decoration: BoxDecoration(
                                   boxShadow: const [
                                     BoxShadow(
-                                        color: Color(0x15b83058),
+                                        color: Colors.black26,
                                         blurRadius: 8,
                                         spreadRadius: 1,
                                         offset: Offset(0, 8))
@@ -523,7 +527,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                               flex: 4,
                                               child: Text(
                                                 (resolvedViewModal
-                                                    .resolvedList[index]
+                                                    .resolvedList[itemIndex]
                                                     .grievanceNo)!,
                                                 style: const TextStyle(
                                                     color: Color(0xFFb83058),
@@ -575,7 +579,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                                 flex: 3,
                                                 child: Text(
                                                   (resolvedViewModal
-                                                      .resolvedList[index]
+                                                      .resolvedList[itemIndex]
                                                       .taluka)!,
                                                   style: const TextStyle(
                                                       color: Colors.black87,
@@ -586,9 +590,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                                 flex: 3,
                                                 child: Text(
                                                   (resolvedViewModal
-                                                      .resolvedList[index]
+                                                      .resolvedList[itemIndex]
                                                       .department)!,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.black87,
                                                       fontSize: 13,
                                                       fontFamily: 'Montserrat'),
@@ -613,7 +617,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                               ),
                                               Text(
                                                 (resolvedViewModal
-                                                    .resolvedList[index]
+                                                    .resolvedList[itemIndex]
                                                     .nature_Of_Grievance)!,
                                                 style: const TextStyle(
                                                   fontSize: 13,
@@ -634,14 +638,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         ],
                                       ),
                                       const Divider(),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       Row(
                                         children: [
                                           Text(
                                             'regDate'.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 10,
                                                 fontFamily: 'Montserrat',
                                                 color: Colors.grey),
@@ -650,16 +654,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             flex: 5,
                                             child: Text(
                                               (resolvedViewModal
-                                                  .resolvedList[index]
+                                                  .resolvedList[itemIndex]
                                                   .reg_Date)!,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 10,
                                                   fontFamily: 'Montserrat'),
                                             ),
                                           ),
                                           Text(
                                             'resolvedDate'.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.grey,
                                                 fontFamily: 'Montserrat'),
@@ -668,9 +672,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             flex: 4,
                                             child: Text(
                                               (resolvedViewModal
-                                                  .resolvedList[index]
+                                                  .resolvedList[itemIndex]
                                                   .resolved_Date)!,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 12,
                                                   fontFamily: 'Montserrat'),
                                             ),
@@ -681,7 +685,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ), options: CarouselOptions(
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                     autoPlayInterval: const Duration(milliseconds:500),
+                      autoPlayAnimationDuration: const Duration(seconds:12),
+                      autoPlayCurve: Curves.linear,
+                      enlargeCenterPage: false,
+                        scrollDirection: Axis.vertical,
+                      animateToClosest: true
+                    ),
                           ),
                   )),
             )

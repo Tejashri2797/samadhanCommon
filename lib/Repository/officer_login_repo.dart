@@ -5,6 +5,7 @@ import '../Modal/officerlogin_modal.dart';
 
 List<OfficerLoginModal> officerDetailList = [];
 String? message;
+
 class OfficerLoginRepo {
   static var queryParameters;
 

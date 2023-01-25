@@ -123,7 +123,7 @@ class _OTPTabPageState extends State<OTPTabPage> {
                           const Expanded(
                               flex: 1,
                               child: TabBarView(
-                                children: [OTP_Page(), SignUp()],
+                                children: [OTPPage(), SignUp()],
                               ))
                         ],
                       ),
@@ -146,7 +146,7 @@ class _OTPTabPageState extends State<OTPTabPage> {
                             fieldFive.text)) {
                       await profileVM.getDetails(postId!);
                       SharedPreferences pref = await SharedPreferences.getInstance();
-                      pref.setBool('login', true);
+                      pref.setString('login', subUsertypeId.toString());
                       data.write('profileId', postId);
                       data.write('profileName', profileName);
                       Get.offAllNamed('/DashBoardScreen');
@@ -169,13 +169,11 @@ class _OTPTabPageState extends State<OTPTabPage> {
                         createdBy: createdBy,
                         userTypeId: usertypeId,
                       ));
-
-
                       if(PostOTP.otpList2.isNotEmpty) {
                       await profileVM.getDetails(id1!);
                       await notificatinDetailsVM.notificationData(id1!);
                       SharedPreferences pref = await SharedPreferences.getInstance();
-                       pref.setBool('login', true);
+                       pref.setString('login',subUsertypeId.toString());
                          data.write('profileId', id1);
                          data.write('profileName', profileName);
                         Get.offAndToNamed('/DashBoardScreen');

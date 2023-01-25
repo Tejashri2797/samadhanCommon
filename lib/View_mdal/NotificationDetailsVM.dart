@@ -11,7 +11,7 @@ import '../Modal/NotificationDetails.dart';
 import '../Repository/NotificationDetailsRepo.dart';
 String? notifications;
 class NotificatinDetailsVM extends GetxController{
-  List<NotificationDetailModal> notifictn=[];
+  List<NotificationDetailModal> notificationList=[];
 
   var isLoading =true.obs;
   @override
@@ -25,13 +25,10 @@ class NotificatinDetailsVM extends GetxController{
 
     if(details != null){
 
-      notifictn =  details;
+      notificationList =  details;
 
       isLoading.value=false;
     }
-    print(notifictn);
-
-
 
   }
 

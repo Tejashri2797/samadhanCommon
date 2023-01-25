@@ -119,6 +119,10 @@ class LocalString extends Translations {
           "regards" : "Regards,\nSamadhan team",
           "selectreason" : "Select Reason",
           "disatisfactionreason" : "Reason for Dissatisfaction",
+          "connectionToastMsg" : "Please turn on your internet connection !!!",
+          "name_missing_string" : "Please Enter user Name",
+          "password_missing_string" : "Please Enter valid password",
+
 
         },
         'mr_IN': {
@@ -229,6 +233,9 @@ class LocalString extends Translations {
           "regards" : "विनम्र,\nसमाधान टीम",
           "selectreason" : "कारण निवडा",
           "disatisfactionreason" : "असंतोषाचे कारण",
+          "connectionToastMsg" : "कृपया आपले इंटरनेट कनेक्शन चालू करा !!!",
+          "name_missing_string" : "कृपया वैध नाव प्रविष्ट करा",
+          "password_missing_string" : "कृपया वैध पासवर्ड प्रविष्ट करा",
 
 
         },

@@ -14,15 +14,11 @@ class PicChartVM extends GetxController{
   List<PicChartModalClass> chartData=[];
 
   var isLoading =true.obs;
-  @override
-  void onInit(){
-    super.onInit();
-   // chartDetails();
-  }
+
 
   chartDetails(String id,String startDate,String endDate)async{
     var details = await PicChartRepo.pieChartData(id,startDate,endDate);
-print(details);
+
     if(details != null){
 
       chartData =  details;

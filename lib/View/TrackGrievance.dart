@@ -36,28 +36,7 @@ class _TrackGrievanceState extends State<TrackGrievance> {
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Obx(() => (trackGrievanceVM.isLoading.value == true
-        )
-          ? Center(
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.black45,
-              borderRadius: BorderRadius.circular(20)),
-          height: 130,
-          width: 130,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                CircularProgressIndicator(
-                  color: Colors.red,
-                ),
-                Text(
-                  "Please wait",
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ]),
-        ),
-      ) : NotificationListener<OverscrollIndicatorNotification>(
+      body: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (overScroll){
             overScroll.disallowIndicator();
             return true;
@@ -265,236 +244,238 @@ class _TrackGrievanceState extends State<TrackGrievance> {
                             height: MediaQuery.of(context).size.height / 1.76,
                             width: MediaQuery.of(context).size.width,
                             color: Colors.white,
-                            child: ListView.builder(
-                                itemCount: trackGrievanceVM.grievanceList.length,
-                                itemBuilder: (BuildContext context,
-                                        int index) =>
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 9.0),
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          await trackGrievanceByIDVM.getGrievanceList((trackGrievanceVM.grievanceList[index].grievanceId)!.toString());
-                                          trackGrievanceByIDVM.grievanceList2.clear();
-                                          Get.toNamed("/TrackGrievanceViewPage");
-                                        },
-                                        child: Container(
-                                          height:
-                                              MediaQuery.of(context).size.height / 5,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(7),
-                                            border: Border.all(
-                                                color: Colors.grey.shade300),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 1,
-                                                child: Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2.2,
-                                                  decoration: const BoxDecoration(
-                                                      color: Color(0xFFb83058),
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(7),
-                                                              bottomLeft:
-                                                                  Radius.circular(
-                                                                      7))),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      Text("${index + 1}",
-                                                          style: const TextStyle(
-                                                              fontSize: 30,
-                                                              color: Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight.w300,
-                                                              fontFamily:
-                                                                  'Montserrat-Regular')),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(( trackGrievanceVM.grievanceList[index].grievanceSubmissionDate!).toString()!)),
-                                                          style: TextStyle(
-                                                              fontSize: 13,
-                                                              color: Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight.w300,
-                                                              fontFamily:
-                                                                  'Montserrat-Regular')),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 8.0,
-                                                      right: 8.0,
-                                                      top: 7),
+                            child:Obx(() => (trackGrievanceVM.isLoading.value == true)?Text("")
+                              : ListView.builder(
+                                  itemCount: trackGrievanceVM.grievanceList.length,
+                                  itemBuilder: (BuildContext context,
+                                          int index) =>
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 9.0),
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            await trackGrievanceByIDVM.getGrievanceList((trackGrievanceVM.grievanceList[index].grievanceId)!.toString());
+                                            trackGrievanceByIDVM.grievanceList2.clear();
+                                            Get.toNamed("/TrackGrievanceViewPage");
+                                          },
+                                          child: Container(
+                                            height:
+                                                MediaQuery.of(context).size.height / 5,
+                                            width:
+                                                MediaQuery.of(context).size.width,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(7),
+                                              border: Border.all(
+                                                  color: Colors.grey.shade300),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
                                                   child: Container(
                                                     height: MediaQuery.of(context)
                                                             .size
                                                             .width /
-                                                        2.3,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
+                                                        2.2,
+                                                    decoration: const BoxDecoration(
+                                                        color: Color(0xFFb83058),
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                7)),
+                                                            BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(7),
+                                                                bottomLeft:
+                                                                    Radius.circular(
+                                                                        7))),
                                                     child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
                                                       children: [
-                                                        Row(
-                                                          children:  [
-                                                            const Text("Grievance Id",
-                                                                style: TextStyle(
-                                                                    fontSize: 12,
-                                                                    color: Colors.black54,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Montserrat-Regular')),
-                                                            const Spacer(),
-                                                            GestureDetector(
-                                                              onTap: () async {
-                                                                await trackGrievanceByIDVM.getGrievanceList((trackGrievanceVM.grievanceList[index].grievanceId)!.toString());
-                                                                trackGrievanceByIDVM.grievanceList2.clear();
-                                                                Get.toNamed("/TrackGrievanceViewPage");
-                                                              },
-                                                              child: Text(
-                                                                "view".tr,
-                                                                style: const TextStyle(
-                                                                  fontSize: 13,
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                      .transparent,
-                                                                  shadows: [
-                                                                    Shadow(
-                                                                        offset:
-                                                                            Offset(
-                                                                                0,
-                                                                                -5),
-                                                                        color: Colors
-                                                                            .blue)
-                                                                  ],
-                                                                  // Step 3 SEE HERE
-                                                                  decoration:
-                                                                      TextDecoration
-                                                                          .underline,
-                                                                  decorationColor:
-                                                                      Colors.blue,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 2,
-                                                        ),
-                                                         Text(
-                                                         trackGrievanceVM.grievanceList[index].grievanceNo!,
-                                                          style: TextStyle(
-                                                              height: 1,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Colors.black,
-                                                              fontFamily:
-                                                                  'Montserrat',
-                                                              fontStyle: FontStyle
-                                                                  .normal),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 8,
-                                                        ),
-                                                       Text("dept".tr,
-                                                            style: const  TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .black54,
+                                                        Text("${index + 1}",
+                                                            style: const TextStyle(
+                                                                fontSize: 30,
+                                                                color: Colors.white,
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
+                                                                    FontWeight.w300,
                                                                 fontFamily:
                                                                     'Montserrat-Regular')),
                                                         const SizedBox(
-                                                          height: 2,
+                                                          height: 5,
                                                         ),
-
-                                                       ( trackGrievanceVM.grievanceList[index].departmentName==null)?Text("Not Selected")
-                                                        :Text(
-                                                           ( trackGrievanceVM.grievanceList[index].departmentName)!,
-                                                          style: const TextStyle(
-                                                              height: 1,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Colors.black,
-                                                              fontFamily:
-                                                                  'Montserrat',
-                                                              fontStyle: FontStyle
-                                                                  .normal),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 8,
-                                                        ),
-                                                         Text("status".tr,
-                                                            style:const TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .black54,
+                                                        Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(( trackGrievanceVM.grievanceList[index].grievanceSubmissionDate!).toString()!)),
+                                                            style: TextStyle(
+                                                                fontSize: 13,
+                                                                color: Colors.white,
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
+                                                                    FontWeight.w300,
                                                                 fontFamily:
                                                                     'Montserrat-Regular')),
-                                                        const SizedBox(
-                                                          height: 2,
-                                                        ),
-                                                        (trackGrievanceVM.grievanceList[index].status==null)?Text(''):
-                                                        Text(
-                                                          (trackGrievanceVM.grievanceList[index].status)!,
-                                                          style: TextStyle(
-                                                              height: 1,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Colors
-                                                                  .greenAccent
-                                                                  .shade400,
-                                                              fontFamily:
-                                                                  'Montserrat',
-                                                              fontStyle: FontStyle
-                                                                  .normal),
-                                                        ),
                                                       ],
                                                     ),
                                                   ),
                                                 ),
-                                              )
-                                            ],
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                        left: 8.0,
+                                                        right: 8.0,
+                                                        top: 7),
+                                                    child: Container(
+                                                      height: MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          2.3,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  7)),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            children:  [
+                                                              const Text("Grievance Id",
+                                                                  style: TextStyle(
+                                                                      fontSize: 12,
+                                                                      color: Colors.black54,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      fontFamily:
+                                                                          'Montserrat-Regular')),
+                                                              const Spacer(),
+                                                              GestureDetector(
+                                                                onTap: () async {
+                                                                  await trackGrievanceByIDVM.getGrievanceList((trackGrievanceVM.grievanceList[index].grievanceId)!.toString());
+                                                                  trackGrievanceByIDVM.grievanceList2.clear();
+                                                                  Get.toNamed("/TrackGrievanceViewPage");
+                                                                },
+                                                                child: Text(
+                                                                  "view".tr,
+                                                                  style: const TextStyle(
+                                                                    fontSize: 13,
+                                                                    fontFamily:
+                                                                        'Montserrat',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    shadows: [
+                                                                      Shadow(
+                                                                          offset:
+                                                                              Offset(
+                                                                                  0,
+                                                                                  -5),
+                                                                          color: Colors
+                                                                              .blue)
+                                                                    ],
+                                                                    // Step 3 SEE HERE
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .underline,
+                                                                    decorationColor:
+                                                                        Colors.blue,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 2,
+                                                          ),
+                                                           Text(
+                                                           trackGrievanceVM.grievanceList[index].grievanceNo!,
+                                                            style: TextStyle(
+                                                                height: 1,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight.w400,
+                                                                color: Colors.black,
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                fontStyle: FontStyle
+                                                                    .normal),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 8,
+                                                          ),
+                                                         Text("dept".tr,
+                                                              style: const  TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .black54,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Montserrat-Regular')),
+                                                          const SizedBox(
+                                                            height: 2,
+                                                          ),
+
+                                                         ( trackGrievanceVM.grievanceList[index].departmentName==null)?Text("Not Selected")
+                                                          :Text(
+                                                             ( trackGrievanceVM.grievanceList[index].departmentName)!,
+                                                            style: const TextStyle(
+                                                                height: 1,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight.w400,
+                                                                color: Colors.black,
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                fontStyle: FontStyle
+                                                                    .normal),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 8,
+                                                          ),
+                                                           Text("status".tr,
+                                                              style:const TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .black54,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Montserrat-Regular')),
+                                                          const SizedBox(
+                                                            height: 2,
+                                                          ),
+                                                          (trackGrievanceVM.grievanceList[index].status==null)?Text(''):
+                                                          Text(
+                                                            (trackGrievanceVM.grievanceList[index].status)!,
+                                                            style: TextStyle(
+                                                                height: 1,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight.w400,
+                                                                color: Colors
+                                                                    .greenAccent
+                                                                    .shade400,
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                fontStyle: FontStyle
+                                                                    .normal),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )),
+                                      )),
+                            ),
                           )
                         ],
                       ),
@@ -528,6 +509,6 @@ class _TrackGrievanceState extends State<TrackGrievance> {
           ),
         ),
       ),
-    ));
+    );
   }
 }

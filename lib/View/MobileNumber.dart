@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Utility/TextFieldControllerFile.dart';
+import '../View_mdal/district_viewmodal.dart';
 import '../View_mdal/signup_validation.dart';
+import '../View_mdal/taluka_viewmodal.dart';
 GlobalKey<FormState> otpFormKey=GlobalKey<FormState>();
 int? numberFlag;
 class MobileNumber extends StatefulWidget {
@@ -16,12 +18,16 @@ class MobileNumber extends StatefulWidget {
 }
 
 final allValidation=Get.put(AllValidation());
+final districtViewModalno = Get.put(DistrictViewModal());
+final talukaViewModalno = Get.put(TalukaViewModal());
 class _MobileNumberState extends State<MobileNumber> {
   @override
   void initState() {
     // TODO: implement initState
 
     super.initState();
+
+
 
 
 

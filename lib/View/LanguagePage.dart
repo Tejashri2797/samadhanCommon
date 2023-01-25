@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Utility/CommonString.dart';
+import '../Utility/snack_bar.dart';
+import '../service/CheckInternetCon.dart';
+
 
 
 
@@ -16,18 +18,22 @@ class ChooseLanguage extends StatefulWidget {
 }
 
 class _ChooseLanguageState extends State<ChooseLanguage> {
-
+  final GetXNetworkManager networkManager = Get.find<GetXNetworkManager>();
   Future<bool> getLanguage() async {
-
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getBool('visit') ?? false;
   }
       @override
   void initState() {
+        fToast.init(context);
 
-    // TODO: implement initState
+        // TODO: implement initState
     super.initState();
+
+
+
   }
+
   var locale;
   @override
   Widget build(BuildContext context) {
@@ -203,6 +209,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),
@@ -219,8 +226,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                       value ? Get.offAllNamed("/DashBoardScreen"): Get.offAllNamed('/loginAndSignUp')
                     });
 
-                    SharedPreferences pref = await SharedPreferences.getInstance();
-                    pref.setBool('visit', true);
+
 
 
 

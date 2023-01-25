@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Repository/otppost_repository.dart';
 import '../Utility/DashboardCommonWidget.dart';
 import '../View_mdal/ProfileVM.dart';
@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
                 ),
                    Text(profileName!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: 'Montserrat-Medium'
                     ),),
@@ -110,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             context: context,
                             builder: (_) =>
                                 AlertDialog(
-                                  title: Container(
+                                  title: SizedBox(
                                     height: 170,
                                     width: MediaQuery
                                         .of(context)
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             height: 50,
                                           ),
                                         ),
-                                        SizedBox(height: 30,),
+                                        const SizedBox(height: 30,),
                                         Text(
                                           "logoutAlert".tr,
                                           style:const TextStyle(
@@ -134,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               fontSize: 16,
                                               color: Colors.black),
                                         ),
-                                        SizedBox(height: 20,),
+                                        const SizedBox(height: 20,),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment
                                               .spaceEvenly,
@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             MaterialButton(
                                               height: 40,
                                               minWidth: 100,
-                                              color: Color(0xFFb83058),
+                                              color: const Color(0xFFb83058),
                                               onPressed: () {
                                                 Get.back();
                                               },
@@ -155,11 +155,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             MaterialButton(
                                               height: 40,
                                               minWidth: 100,
-                                              color: Color(0xFFb83058),
+                                              color: const Color(0xFFb83058),
                                               onPressed: () async {
                                                 await logoutViewModal.logoutCurrentUser(int.parse("${data.read('profileId')}"));
                                                 data.remove('profileId');
                                                 PostOTP.otpList2.clear();
+                                                SharedPreferences pref= await SharedPreferences.getInstance();
+                                                pref.remove('login');
                                                 Get.offAllNamed('/loginAndSignUp');
                                                 },
                                               child: Text(
@@ -194,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: CircleAvatar(
               radius: 36,
               child: SvgPicture.asset('assets/Profile Colorful.svg',),
-              //   backgroundImage: AssetImage('assets/images/dashboard_screen/Profile Colorful.png',),
+
             ),
           ),
           Positioned(
