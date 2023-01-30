@@ -162,7 +162,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 PostOTP.otpList2.clear();
                                                 SharedPreferences pref= await SharedPreferences.getInstance();
                                                 pref.remove('login');
-                                                Get.offAllNamed('/loginAndSignUp');
+                                                pref.remove('language');
+
+                                                Get.offAllNamed('/');
                                                 },
                                               child: Text(
                                                 'y'.tr,

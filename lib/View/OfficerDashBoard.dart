@@ -562,7 +562,7 @@ class _OfficerDashboardState extends State<OfficerDashboard> {
 
                        });
                        setState(() {
-                         trackGrievanceVMDashboard.trackGrievanceList("${officerData.read('officerId')}");
+                         trackGrievanceVMDashboard.trackGrievanceList("0","${officerData.read('officerId')}");
                          Get.toNamed("/TrackGrievance");
                        });
 

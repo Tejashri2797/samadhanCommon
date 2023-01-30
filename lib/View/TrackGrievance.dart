@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:samadhan/Modal/StatusModal.dart';
 
 
 import '../Utility/PopUpMenuCommonStringClass.dart';
 import '../View_mdal/TrackGrievanceByIDVM.dart';
 import '../View_mdal/TrackGrievanceSearchVM.dart';
+import '../View_mdal/status_vm.dart';
 import '../View_mdal/track_grievance_list_vm.dart';
+import 'OTPTabbar.dart';
 
 class TrackGrievance extends StatefulWidget {
   const TrackGrievance({Key? key}) : super(key: key);
@@ -20,7 +23,9 @@ class TrackGrievance extends StatefulWidget {
 TextEditingController search =TextEditingController();
 final trackGrievanceVM= Get.put(TrackGrievanceListVM());
 final trackGrievanceSearchVM= Get.put(TrackGrievanceSearchVM());
+final statusVM = Get.put(StatusVM());
 TrackGrievanceByIDVM trackGrievanceByIDVM=TrackGrievanceByIDVM();
+String? statusId;
 
 class _TrackGrievanceState extends State<TrackGrievance> {
   @override
@@ -29,6 +34,9 @@ class _TrackGrievanceState extends State<TrackGrievance> {
     super.initState();
     setState(() {
       trackGrievanceByIDVM.grievanceList2.clear();
+      statusVM.statusList.clear();
+      statusVM.isLoading.value = true;
+      statusVM.statusDetails();
     });
   }
   @override
@@ -102,8 +110,8 @@ class _TrackGrievanceState extends State<TrackGrievance> {
                         ]),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16.0, right: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: ListView(
+                      //  crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(
                             height: 25,
@@ -155,46 +163,52 @@ class _TrackGrievanceState extends State<TrackGrievance> {
                               ),
                               Expanded(
                                   flex: 1,
-                                  child: CircleAvatar(
-                                    radius: 22,
-                                    backgroundColor: const Color(0xFFb83058),
-                                    child:PopupMenuButton(
-                                      onSelected: (value) {
-                                        setState(() {
-                                          value = value;
-                                        });
-                                      },
-                                      itemBuilder: (context){
-                                        return
-                                          list.map((popupItem choice) {
-                                            return PopupMenuItem(
-                                                value: choice,
-                                                child: Column(
-                                                  children: [
-                                                    Text(choice.name,style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Colors.black54,
-                                                      fontFamily: 'Montserrat Bold',
-                                                      //fontStyle: FontStyle.normal
-                                                    ),),
-                                                    Divider(
-                                                      thickness: 2,
-                                                      color: Colors.grey.shade100,
-                                                    )
-                                                  ],
-                                                )
-                                            );
-                                          }).toList();
-                                      },
-                                      child: CircleAvatar(
-                                        radius: 20,
-                                        backgroundColor: Colors.white,
-                                        child: SvgPicture.asset("assets/filter.svg",
-                                            height: 25),
-                                      ),
+                                  child: PopupMenuButton(
+                                    onSelected: (value) async {
+                                      setState(() {
+                                        statusId = value;
+                                        print(statusId);
+                                      });
+                                      trackGrievanceVM.grievanceList.clear();
+                                      trackGrievanceVM.isLoading.value = true;
+                                     await trackGrievanceVM.trackGrievanceList("2","${data.read('profileId')}");
+                                    },
+                                    itemBuilder: (BuildContext context){
+                                      return
+                                        statusVM.statusList.map((StatusModal choice) {
+                                          return PopupMenuItem(
+                                              value: choice.id.toString(),
+                                              child: Column(
+                                                children: [
+                                                  Text(choice.name.toString(),style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.black54,
+                                                    fontFamily: 'Montserrat Bold',
+                                                    //fontStyle: FontStyle.normal
+                                                  ),),
+                                                  Divider(
+                                                    thickness: 2,
+                                                    color: Colors.grey.shade100,
+                                                  )
+                                                ],
+                                              )
+                                          );
+                                        }).toList();
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 22,
+                                      backgroundColor: const Color(0xFFb83058),
+                                       child: CircleAvatar(
+                                            radius: 20,
+                                            backgroundColor: Colors.white,
+                                            child: SvgPicture.asset("assets/filter.svg",
+                                                height: 25),
+                                          ),
+                                        ),
+                                  ),
                                     ),
-                                  ))
+
                             ],
                           ),
                           const SizedBox(
@@ -241,9 +255,14 @@ class _TrackGrievanceState extends State<TrackGrievance> {
                             height: 5,
                           ),
                           Container(
-                            height: MediaQuery.of(context).size.height / 1.76,
+                            height: MediaQuery.of(context).size.height /1.5,
                             width: MediaQuery.of(context).size.width,
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.circular(30),
+
+                            ),
                             child:Obx(() => (trackGrievanceVM.isLoading.value == true)?Text("")
                               : ListView.builder(
                                   itemCount: trackGrievanceVM.grievanceList.length,
@@ -259,13 +278,13 @@ class _TrackGrievanceState extends State<TrackGrievance> {
                                           },
                                           child: Container(
                                             height:
-                                                MediaQuery.of(context).size.height / 5,
+                                                MediaQuery.of(context).size.height /4.8,
                                             width:
                                                 MediaQuery.of(context).size.width,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               borderRadius:
-                                                  BorderRadius.circular(7),
+                                                  BorderRadius.circular(10),
                                               border: Border.all(
                                                   color: Colors.grey.shade300),
                                             ),
@@ -323,20 +342,19 @@ class _TrackGrievanceState extends State<TrackGrievance> {
                                                         right: 8.0,
                                                         top: 7),
                                                     child: Container(
-                                                      height: MediaQuery.of(context)
-                                                              .size
-                                                              .width /
-                                                          2.3,
+                                                      height: MediaQuery.of(context).size.height /2.3,
                                                       decoration: BoxDecoration(
                                                           color: Colors.white,
                                                           borderRadius:
                                                               BorderRadius.circular(
                                                                   7)),
                                                       child: Column(
+
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
+                                                          SizedBox(height: 10,),
                                                           Row(
                                                             children:  [
                                                               const Text("Grievance Id",

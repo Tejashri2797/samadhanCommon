@@ -139,12 +139,6 @@ class _LoginAndSignUpState extends State<LoginAndSignUp> {
                   child: GestureDetector(
                     onTap: () async {
 
-                     if (networkManager.connectionType == 0 ){
-                     setState(() {
-                       toastMessage("connectionToastMsg".tr);
-                     });
-                     }
-                     else{
                       if (selectedIndex == 0) {
                         await otpViewModal
                             .getOTPInformation(mobileNumberController.text);
@@ -207,7 +201,7 @@ class _LoginAndSignUpState extends State<LoginAndSignUp> {
                                               };
                       }
                       // otpViewModal.otpList;
-                    }},
+                    },
                     child: CircleAvatar(
                       radius: 30,
                       backgroundColor: Colors.white,

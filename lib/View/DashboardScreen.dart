@@ -148,7 +148,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                      setState(() {
                        trackGrievanceVMDashboard.grievanceList.clear();
                        trackGrievanceVMDashboard.isLoading.value = true;
-                       trackGrievanceVMDashboard.trackGrievanceList("${data.read('profileId')}");
+                       trackGrievanceVMDashboard.trackGrievanceList("0","${data.read('profileId')}");
                        Get.toNamed('/TrackGrievance');
                      });
                     },
@@ -160,9 +160,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     height: 10,
                   ),
 
-                  drawerBox(
-                      icon: 'assets/feedback Grey.svg',
-                      section: 'submitFeedback'.tr),
+                  GestureDetector(
+                    onTap: (){
+                      submitFeedbackVM.feedbackList.clear();
+                      submitFeedbackVM.isLoading.value=true;
+                      submitFeedbackVM.feedbackGrievanceList("${data.read('profileId')}");
+
+                      //  submitFeedbackVM.feedbackGrievanceList();
+                      Get.toNamed("/SubmitFeedback");
+                    },
+                    child: drawerBox(
+                        icon: 'assets/feedback Grey.svg',
+                        section: 'submitFeedback'.tr),
+                  ),
                   const SizedBox(
 
 
@@ -310,7 +320,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
             Padding(
               padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
+                  EdgeInsets.only(top: MediaQuery.of(context).size.height /3.7),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.grey.shade100,
@@ -390,64 +400,375 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 6,
-                  left: MediaQuery.of(context).size.width / 10,
-                  right: MediaQuery.of(context).size.width / 10),
-              child: GridView.count(
-                clipBehavior: Clip.none,
-                crossAxisCount: 2,
-                mainAxisSpacing: 30,
-                crossAxisSpacing: 35,
+              padding:  EdgeInsets.only(top:MediaQuery.of(context).size.height/6.2),
+              child: ListView(
+                physics:NeverScrollableScrollPhysics(),
                 children: [
-                  GestureDetector(
-                    onTap: () async {
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
 
-                      Get.toNamed("/PostGrievance1");
-                    },
-                    child: dashboardGridContainer(context,
-                        imageIconPath: 'assets/Track Grievance.svg',
-                        imageIconText: 'postGrievanceD'.tr),
+                          Get.toNamed("/PostGrievance1");
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Post Grievance.svg',
+                            imageIconText: 'postGrievanceD'.tr),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          setState(() {
+                            trackGrievanceVMDashboard.grievanceList.clear();
+                            trackGrievanceVM.isLoading.value = true;
+                            trackGrievanceVM.trackGrievanceList("0","${data.read('profileId')}");
+                            Get.toNamed("/TrackGrievance");
+                          });
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Track Grievance.svg',
+                            imageIconText: 'trackGrievanceD'.tr),
+                      ),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                     setState(() {
-                       trackGrievanceVMDashboard.grievanceList.clear();
-                       trackGrievanceVM.isLoading.value = true;
-                        trackGrievanceVM.trackGrievanceList("${data.read('profileId')}");
-                       Get.toNamed("/TrackGrievance");
-                     });
-                    },
-                    child: dashboardGridContainer(context,
-                        imageIconPath: 'assets/Track Grievance.svg',
-                        imageIconText: 'trackGrievanceD'.tr),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      submitFeedbackVM.feedbackList.clear();
-                      submitFeedbackVM.isLoading.value=true;
-                      submitFeedbackVM.feedbackGrievanceList("${data.read('profileId')}");
+                  SizedBox(height: 25,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          submitFeedbackVM.feedbackList.clear();
+                          submitFeedbackVM.isLoading.value=true;
+                          submitFeedbackVM.feedbackGrievanceList("${data.read('profileId')}");
 
-                      //  submitFeedbackVM.feedbackGrievanceList();
-                      Get.toNamed("/SubmitFeedback");
-                    },
-                    child: dashboardGridContainer(context,
-                        imageIconPath: 'assets/Submit Feedback.svg',
-                        imageIconText: 'submitFeedbackD'.tr),
+                          //  submitFeedbackVM.feedbackGrievanceList();
+                          Get.toNamed("/SubmitFeedback");
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Submit Feedback.svg',
+                            imageIconText: 'submitFeedbackD'.tr),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed("/ContactUsScreen");
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Contact Us.svg',
+                            imageIconText: 'contactD'.tr),
+                      ),
+                    ],
+
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed("/ContactUsScreen");
-                    },
-                    child: dashboardGridContainer(context,
-                        imageIconPath: 'assets/Contact Us.svg',
-                        imageIconText: 'contactD'.tr),
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding:  EdgeInsets.only(left: 25.0),
+                    child: Text(
+                      'latestGrievanceResolved'.tr,
+                      style: const TextStyle(
+                          color: Color(0xFFb83058),
+                          fontSize: 19,
+                          fontFamily: 'Montserrat-SemiBold'),
+                    ),
                   ),
+                  SizedBox(height: 10,),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Obx(
+                          () => (resolvedViewModal.isLoading.value == true)
+                          ? Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black45,
+                              borderRadius: BorderRadius.circular(20)),
+                          height: 130,
+                          width: 130,
+                          child: Column(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              CircularProgressIndicator(
+                                color: Color(0xFFb83058),
+                              ),
+                              Text(
+                                "Please wait",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                          : Container(
+                            height:MediaQuery.of(context).size.height/2.6 ,
+                            width: MediaQuery.of(context).size.width,
+                            child: CarouselSlider.builder(
+
+                        itemCount: resolvedViewModal.resolvedList.length,
+                        itemBuilder: (BuildContext context,int itemIndex, int pageViewitemIndex) =>
+                              Padding(
+                                padding:  EdgeInsets.only(left: 15.0,right: 15,),
+
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 10,),
+                                  height: MediaQuery.of(context).size.height/2.7,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    boxShadow: const [
+                                      BoxShadow(
+                                          color: Colors.black26,
+                                          blurRadius: 8,
+                                          spreadRadius: 1,
+                                          offset: Offset(0, 8))
+                                    ],
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      top: 10,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 4,
+                                                child: Text(
+                                                  (resolvedViewModal
+                                                      .resolvedList[itemIndex]
+                                                      .grievanceNo)!,
+                                                  style: const TextStyle(
+                                                      color: Color(0xFFb83058),
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      fontWeight:
+                                                      FontWeight.bold),
+                                                )),
+                                            const Expanded(
+                                              flex: 7,
+                                              child: Divider(
+                                                color: Color(0xFFb83058),
+                                                thickness: 0.5,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 8),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    'tal'.tr,
+                                                    style: const TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    'dept'.tr,
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.grey,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.only(bottom: 6),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    (resolvedViewModal
+                                                        .resolvedList[itemIndex]
+                                                        .taluka)!,
+                                                    style: const TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 13,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    (resolvedViewModal
+                                                        .resolvedList[itemIndex]
+                                                        .department)!,
+                                                    style: const TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 13,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'nature'.tr,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.grey,
+                                                      fontFamily: 'Montserrat'),
+                                                ),
+                                                Text(
+                                                  (resolvedViewModal
+                                                      .resolvedList[itemIndex]
+                                                      .nature_Of_Grievance)!,
+                                                  style: const TextStyle(
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: SvgPicture.asset(
+                                                'assets/Satisfied logo green.svg',
+                                                height: 50,
+                                                width: 50,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        const Divider(),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'regDate'.tr,
+                                              style: const TextStyle(
+                                                  fontSize: 10,
+                                                  fontFamily: 'Montserrat',
+                                                  color: Colors.grey),
+                                            ),
+                                            Expanded(
+                                              flex: 5,
+                                              child: Text(
+                                                (resolvedViewModal
+                                                    .resolvedList[itemIndex]
+                                                    .reg_Date)!,
+                                                style: const TextStyle(
+                                                    fontSize: 10,
+                                                    fontFamily: 'Montserrat'),
+                                              ),
+                                            ),
+                                            Text(
+                                              'resolvedDate'.tr,
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey,
+                                                  fontFamily: 'Montserrat'),
+                                            ),
+                                            Expanded(
+                                              flex: 4,
+                                              child: Text(
+                                                (resolvedViewModal
+                                                    .resolvedList[itemIndex]
+                                                    .resolved_Date)!,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontFamily: 'Montserrat'),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ), options: CarouselOptions(
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(milliseconds:500),
+                            autoPlayAnimationDuration: const Duration(seconds:12),
+                            autoPlayCurve: Curves.linear,
+                            enlargeCenterPage: false,
+                            scrollDirection: Axis.vertical,
+                            animateToClosest: true
+                      ),
+                      ),
+                          ),
+                    ),
+                  )
+                  /*GridView.count(
+                    clipBehavior: Clip.none,
+                    crossAxisCount: 2,
+                    mainAxisSpacing: MediaQuery.of(context).size.height/50,
+                    crossAxisSpacing: MediaQuery.of(context).size.height/25,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+
+                          Get.toNamed("/PostGrievance1");
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Track Grievance.svg',
+                            imageIconText: 'postGrievanceD'.tr),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                         setState(() {
+                           trackGrievanceVMDashboard.grievanceList.clear();
+                           trackGrievanceVM.isLoading.value = true;
+                            trackGrievanceVM.trackGrievanceList("${data.read('profileId')}");
+                           Get.toNamed("/TrackGrievance");
+                         });
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Track Grievance.svg',
+                            imageIconText: 'trackGrievanceD'.tr),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          submitFeedbackVM.feedbackList.clear();
+                          submitFeedbackVM.isLoading.value=true;
+                          submitFeedbackVM.feedbackGrievanceList("${data.read('profileId')}");
+
+                          //  submitFeedbackVM.feedbackGrievanceList();
+                          Get.toNamed("/SubmitFeedback");
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Submit Feedback.svg',
+                            imageIconText: 'submitFeedbackD'.tr),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed("/ContactUsScreen");
+                        },
+                        child: dashboardGridContainer(context,
+                            imageIconPath: 'assets/Contact Us.svg',
+                            imageIconText: 'contactD'.tr),
+                      ),
+                    ],
+                  ),*/
+
                 ],
               ),
             ),
-            Positioned(
-              top: MediaQuery.of(context).size.height / 1.57,
+           /* Positioned(
+              top: MediaQuery.of(context).size.height / 1.52,
               left: MediaQuery.of(context).size.width / 20,
               child: Text(
                 'latestGrievanceResolved'.tr,
@@ -456,250 +777,253 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     fontSize: 19,
                     fontFamily: 'Montserrat-SemiBold'),
               ),
-            ),
-            Padding(
+            ),*/
+           /* Padding(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 1.48),
-              child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 5),
+                  top: MediaQuery.of(context).size.height / 1.42),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                    height: MediaQuery.of(context).size.height/2.7,
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(top: 5),
 
-                  // color: Colors.lightBlue,
-                  child: Obx(
-                    () => (resolvedViewModal.isLoading.value == true)
-                        ? Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.black45,
-                                  borderRadius: BorderRadius.circular(20)),
-                              height: 130,
-                              width: 130,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: const [
-                                  CircularProgressIndicator(
-                                    color: Color(0xFFb83058),
-                                  ),
-                                  Text(
-                                    "Please wait",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 15),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        : CarouselSlider.builder(
-                          itemCount: resolvedViewModal.resolvedList.length,
-                            itemBuilder: (BuildContext context,int itemIndex, int pageViewitemIndex) =>
-                                Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 10),
+                    // color: Colors.lightBlue,
+                    child: Obx(
+                      () => (resolvedViewModal.isLoading.value == true)
+                          ? Center(
                               child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 3.6,
-                                width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 8,
-                                        spreadRadius: 1,
-                                        offset: Offset(0, 8))
+                                    color: Colors.black45,
+                                    borderRadius: BorderRadius.circular(20)),
+                                height: 130,
+                                width: 130,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: const [
+                                    CircularProgressIndicator(
+                                      color: Color(0xFFb83058),
+                                    ),
+                                    Text(
+                                      "Please wait",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15),
+                                    )
                                   ],
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 20,
-                                    top: 20,
+                              ),
+                            )
+                          : CarouselSlider.builder(
+                            itemCount: resolvedViewModal.resolvedList.length,
+                              itemBuilder: (BuildContext context,int itemIndex, int pageViewitemIndex) =>
+                                  Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20,bottom: 10),
+                                child: Container(
+                                  height: 350,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+
+                                    boxShadow: const [
+                                      BoxShadow(
+                                          color: Colors.black26,
+                                          blurRadius: 8,
+                                          spreadRadius: 1,
+                                          offset: Offset(0, 8))
+                                    ],
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      top: 10,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 4,
+                                                child: Text(
+                                                  (resolvedViewModal
+                                                      .resolvedList[itemIndex]
+                                                      .grievanceNo)!,
+                                                  style: const TextStyle(
+                                                      color: Color(0xFFb83058),
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                            const Expanded(
+                                              flex: 7,
+                                              child: Divider(
+                                                color: Color(0xFFb83058),
+                                                thickness: 0.5,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 8),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    'tal'.tr,
+                                                    style: const TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    'dept'.tr,
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.grey,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    (resolvedViewModal
+                                                        .resolvedList[itemIndex]
+                                                        .taluka)!,
+                                                    style: const TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 13,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    (resolvedViewModal
+                                                        .resolvedList[itemIndex]
+                                                        .department)!,
+                                                    style: const TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 13,
+                                                        fontFamily: 'Montserrat'),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'nature'.tr,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.grey,
+                                                      fontFamily: 'Montserrat'),
+                                                ),
+                                                Text(
+                                                  (resolvedViewModal
+                                                      .resolvedList[itemIndex]
+                                                      .nature_Of_Grievance)!,
+                                                  style: const TextStyle(
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: SvgPicture.asset(
+                                                'assets/Satisfied logo green.svg',
+                                                height: 50,
+                                                width: 50,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        const Divider(),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'regDate'.tr,
+                                              style: const TextStyle(
+                                                  fontSize: 10,
+                                                  fontFamily: 'Montserrat',
+                                                  color: Colors.grey),
+                                            ),
+                                            Expanded(
+                                              flex: 5,
+                                              child: Text(
+                                                (resolvedViewModal
+                                                    .resolvedList[itemIndex]
+                                                    .reg_Date)!,
+                                                style: const TextStyle(
+                                                    fontSize: 10,
+                                                    fontFamily: 'Montserrat'),
+                                              ),
+                                            ),
+                                            Text(
+                                              'resolvedDate'.tr,
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey,
+                                                  fontFamily: 'Montserrat'),
+                                            ),
+                                            Expanded(
                                               flex: 4,
                                               child: Text(
                                                 (resolvedViewModal
                                                     .resolvedList[itemIndex]
-                                                    .grievanceNo)!,
+                                                    .resolved_Date)!,
                                                 style: const TextStyle(
-                                                    color: Color(0xFFb83058),
-                                                    fontSize: 13,
-                                                    fontFamily: 'Montserrat',
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                          const Expanded(
-                                            flex: 7,
-                                            child: Divider(
-                                              color: Color(0xFFb83058),
-                                              thickness: 0.5,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 8),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 3,
-                                                child: Text(
-                                                  'tal'.tr,
-                                                  style: const TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14,
-                                                      fontFamily: 'Montserrat'),
-                                                )),
-                                            Expanded(
-                                                flex: 3,
-                                                child: Text(
-                                                  'dept'.tr,
-                                                  style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.grey,
-                                                      fontFamily: 'Montserrat'),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 6),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 3,
-                                                child: Text(
-                                                  (resolvedViewModal
-                                                      .resolvedList[itemIndex]
-                                                      .taluka)!,
-                                                  style: const TextStyle(
-                                                      color: Colors.black87,
-                                                      fontSize: 13,
-                                                      fontFamily: 'Montserrat'),
-                                                )),
-                                            Expanded(
-                                                flex: 3,
-                                                child: Text(
-                                                  (resolvedViewModal
-                                                      .resolvedList[itemIndex]
-                                                      .department)!,
-                                                  style: const TextStyle(
-                                                      color: Colors.black87,
-                                                      fontSize: 13,
-                                                      fontFamily: 'Montserrat'),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'nature'.tr,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.grey,
+                                                    fontSize: 12,
                                                     fontFamily: 'Montserrat'),
                                               ),
-                                              Text(
-                                                (resolvedViewModal
-                                                    .resolvedList[itemIndex]
-                                                    .nature_Of_Grievance)!,
-                                                style: const TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Montserrat',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 20),
-                                            child: SvgPicture.asset(
-                                              'assets/Satisfied logo green.svg',
-                                              height: 50,
-                                              width: 50,
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                      const Divider(),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'regDate'.tr,
-                                            style: const TextStyle(
-                                                fontSize: 10,
-                                                fontFamily: 'Montserrat',
-                                                color: Colors.grey),
-                                          ),
-                                          Expanded(
-                                            flex: 5,
-                                            child: Text(
-                                              (resolvedViewModal
-                                                  .resolvedList[itemIndex]
-                                                  .reg_Date)!,
-                                              style: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontFamily: 'Montserrat'),
-                                            ),
-                                          ),
-                                          Text(
-                                            'resolvedDate'.tr,
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.grey,
-                                                fontFamily: 'Montserrat'),
-                                          ),
-                                          Expanded(
-                                            flex: 4,
-                                            child: Text(
-                                              (resolvedViewModal
-                                                  .resolvedList[itemIndex]
-                                                  .resolved_Date)!,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontFamily: 'Montserrat'),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ), options: CarouselOptions(
-                      initialPage: 0,
-                      enableInfiniteScroll: true,
-                      reverse: false,
-                      autoPlay: true,
-                     autoPlayInterval: const Duration(milliseconds:500),
-                      autoPlayAnimationDuration: const Duration(seconds:12),
-                      autoPlayCurve: Curves.linear,
-                      enlargeCenterPage: false,
-                        scrollDirection: Axis.vertical,
-                      animateToClosest: true
-                    ),
-                          ),
-                  )),
-            )
+                              ), options: CarouselOptions(
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                       autoPlayInterval: const Duration(milliseconds:500),
+                        autoPlayAnimationDuration: const Duration(seconds:12),
+                        autoPlayCurve: Curves.linear,
+                        enlargeCenterPage: false,
+                          scrollDirection: Axis.vertical,
+                        animateToClosest: true
+                      ),
+                            ),
+                    )),
+              ),
+            )*/
           ],
         ),
       ),

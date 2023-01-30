@@ -9,6 +9,7 @@ String marathi = "Marathi";
 bool password = true;
 
 class LocalString extends Translations {
+  @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
           "english": "English",
@@ -122,6 +123,9 @@ class LocalString extends Translations {
           "connectionToastMsg" : "Please turn on your internet connection !!!",
           "name_missing_string" : "Please Enter user Name",
           "password_missing_string" : "Please Enter valid password",
+          "samadhan_splash_screen" : "Samadhan",
+          "public_grievance_redress_system_String" : "PUBLIC GRIEVANCE REDRESSAL SYSTEM",
+          "splash_district" : "OSMANABAD DISTRICT",
 
 
         },
@@ -236,6 +240,10 @@ class LocalString extends Translations {
           "connectionToastMsg" : "कृपया आपले इंटरनेट कनेक्शन चालू करा !!!",
           "name_missing_string" : "कृपया वैध नाव प्रविष्ट करा",
           "password_missing_string" : "कृपया वैध पासवर्ड प्रविष्ट करा",
+          "samadhan_splash_screen" : "समाधान",
+          "public_grievance_redress_system_String" : "नागरिक तक्रार निवारण प्रणाली",
+          "splash_district" : "उस्मानाबाद जिल्हा",
+
 
 
         },

@@ -51,7 +51,7 @@ class _SubmitFeedbackState extends State<SubmitFeedback> {
                           ),
                           IconButton(
                               onPressed: () {
-                                Get.toNamed("/DashBoardScreen");
+                                Get.back();
                               },
                               icon: const Icon(
                                 Icons.arrow_back_ios,
@@ -87,8 +87,9 @@ class _SubmitFeedbackState extends State<SubmitFeedback> {
                           ]),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
+                          physics: NeverScrollableScrollPhysics(),
+                         // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(
                               height: 25,

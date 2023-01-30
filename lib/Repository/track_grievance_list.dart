@@ -23,10 +23,10 @@ class TrackGrievanceList {
 
 
 
- static grievanceListData(String createdBy) async {
+ static grievanceListData(String statusId,String createdBy) async {
       queryParameters = {
 
-     "GrievanceStatusId": "0",
+     "GrievanceStatusId": statusId,
      "CreatedBy": createdBy,
 
 

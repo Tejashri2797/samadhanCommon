@@ -46,9 +46,12 @@ Widget dashboardGridContainer(
   String imageIconText = 'Post \nGrievance',
 }) =>
     Container(
+      height: MediaQuery.of(context).size.height/5,
+     width: MediaQuery.of(context).size.width/2.5,
+
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(25),
         boxShadow: const [
           BoxShadow(
               color: Color(0x15b83058),
@@ -60,15 +63,15 @@ Widget dashboardGridContainer(
       ),
       child: Padding(
         padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 20,
+            left: MediaQuery.of(context).size.width / 10,
             top: MediaQuery.of(context).size.height /50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SvgPicture.asset(
               imageIconPath,
-              height: 40,
+              height: 45,
               width: 40,
             ),
             Text(

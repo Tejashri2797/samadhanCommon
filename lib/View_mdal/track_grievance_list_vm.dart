@@ -14,8 +14,8 @@ class TrackGrievanceListVM extends GetxController{
   List<TrackGrievanceListModal>  grievanceList=[];
   var isLoading =true.obs;
 
-  trackGrievanceList(String? createdBy)async{
-    var grievanceDetails =await TrackGrievanceList.grievanceListData(createdBy!);
+  trackGrievanceList(String statusId, String createdBy,)async{
+    var grievanceDetails =await TrackGrievanceList.grievanceListData(statusId,createdBy);
     print(grievanceDetails);
     if(grievanceDetails != null){
       grievanceList=grievanceDetails;

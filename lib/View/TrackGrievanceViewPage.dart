@@ -69,7 +69,7 @@ class _TrackGrievanceViewPageState extends State<TrackGrievanceViewPage> {
                       left: 25,
                       right: 25,
                       top: MediaQuery.of(context).size.height / 9,
-                      bottom: 25),
+                      bottom: 20),
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
@@ -84,8 +84,8 @@ class _TrackGrievanceViewPageState extends State<TrackGrievanceViewPage> {
                         ]),
                     child: Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
+                          //crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(
                               height: 25,
@@ -112,7 +112,7 @@ class _TrackGrievanceViewPageState extends State<TrackGrievanceViewPage> {
                                     focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color(0xFFb83058))),
-                                    hintText: "OS/20221007-1",
+                                     hintText: "OS/20221007-1",
                                     hintStyle: const TextStyle(
                                         height: 1,
                                         fontSize: 18,
@@ -150,7 +150,7 @@ class _TrackGrievanceViewPageState extends State<TrackGrievanceViewPage> {
                               height: 15,
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height / 1.9,
+                              height: MediaQuery.of(context).size.height /1.5,
                               width: MediaQuery.of(context).size.width / 1,
                               decoration: BoxDecoration(
                                   color: Colors.white,

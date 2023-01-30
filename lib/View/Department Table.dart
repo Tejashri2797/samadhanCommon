@@ -159,6 +159,9 @@ class _DepartmentState extends State<Department> {
                                               return setState(() {
                                                 selectedDepartment = dept;
                                                 startDate=null;
+
+
+
                                                 endDate = null;
                                                 deptReportVm.deptReport.clear();
                                                 deptReportVm.isLoading.value = true;

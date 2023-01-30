@@ -1,11 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Utility/CommonString.dart';
 import '../Utility/snack_bar.dart';
-import '../service/CheckInternetCon.dart';
-
 
 
 
@@ -17,8 +16,10 @@ class ChooseLanguage extends StatefulWidget {
   State<ChooseLanguage> createState() => _ChooseLanguageState();
 }
 
+ Locale locale = const Locale('en','US');
+
 class _ChooseLanguageState extends State<ChooseLanguage> {
-  final GetXNetworkManager networkManager = Get.find<GetXNetworkManager>();
+
   Future<bool> getLanguage() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getBool('visit') ?? false;
@@ -34,7 +35,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
 
   }
 
-  var locale;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,10 +102,12 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 25.0,right: 25),
                         child: GestureDetector(
-                          onTap: (){
-                            var locale = const Locale('en','US');
-                            Get.updateLocale(locale);
+                          onTap: () async {
+                            locale = const Locale('en','US');
+                            Get.updateLocale(locale!);
                             selectedLanguage = english.tr;
+                            SharedPreferences pref= await SharedPreferences.getInstance();
+                            pref.setString('language', selectedLanguage);
                           },
                           child: Container(
                             height: 43,
@@ -156,10 +159,15 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                             top: 10
                         ),
                         child: GestureDetector(
-                          onTap: (){
+                          onTap: () async {
                             selectedLanguage = marathi.tr;
                            locale = const Locale('mr','IN');
-                            Get.updateLocale(locale);
+                            Get.updateLocale(locale!);
+                            SharedPreferences pref= await SharedPreferences.getInstance();
+                            pref.setString('language', selectedLanguage);
+                            if (kDebugMode) {
+                              print(selectedLanguage);
+                            }
                           },
                           child: Container(
                             height: 43,
@@ -181,9 +189,8 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                                       onChanged: (val) {
                                         setState(() {
                                           selectedLanguage = val.toString();
-
-                                          //  var locale = const Locale('mr','IN');
-                                           // Get.updateLocale(locale);
+                                            locale = const Locale('mr','IN');
+                                            Get.updateLocale(locale!);
 
 
 
@@ -223,7 +230,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                   onTap: () async {
 
                    await getLanguage().then((value) => {
-                      value ? Get.offAllNamed("/DashBoardScreen"): Get.offAllNamed('/loginAndSignUp')
+                     value ? Get.offAllNamed("/DashBoardScreen"): Get.offAllNamed('/loginAndSignUp')
                     });
 
 
