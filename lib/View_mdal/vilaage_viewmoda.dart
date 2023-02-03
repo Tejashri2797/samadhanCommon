@@ -14,7 +14,7 @@ int? talukaId;
 class VillageViewModal extends GetxController{
 
 List<VillageModalClass> villageList = [];
-List<VillageModalClass> villageListPG = [];
+
 
   final isLoading =true.obs;
 
@@ -33,10 +33,7 @@ List<VillageModalClass> villageListPG = [];
     }
 
 
-    if(villageDetails != null){
-      villageListPG = villageDetails;
-      isLoading.value = false;
-    }
+
 
 
     print(villageList[0].village);

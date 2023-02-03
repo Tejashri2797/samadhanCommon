@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -10,6 +11,7 @@ import '../View_mdal/signup_validation.dart';
 import '../View_mdal/taluka_viewmodal.dart';
 GlobalKey<FormState> otpFormKey=GlobalKey<FormState>();
 int? numberFlag;
+
 class MobileNumber extends StatefulWidget {
   const MobileNumber({Key? key}) : super(key: key);
 
@@ -42,35 +44,47 @@ class _MobileNumberState extends State<MobileNumber> {
               height: 35,
             ),
             Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.only(top: 40.0,left: 13,right: 13,bottom: 38),
               child: SizedBox(
-                height: 47,
+                height: 50,
                 child: Form(
                   key: otpFormKey,
                   child: TextFormField(
                    // validator: allValidation.mobileValidator1,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     controller: mobileNumberController,
                     keyboardType: TextInputType.phone,
                     cursorHeight: 25,
-                    cursorColor: const Color(0xFFb83058),
-                    style: const TextStyle( fontFamily: 'Montserrat',fontSize: 20,height: 1),
+                    cursorColor: Colors.black26,
+                    cursorWidth: 1,
+                    expands: false,
+                    style: const TextStyle(
+                      letterSpacing: 0.2,
+                      fontSize: 19,
+                      color: Colors.black45,
+                      fontFamily: 'Montserrat-Medium',
+                      //  fontStyle: FontStyle.normal
+                    ),
                     decoration: InputDecoration(
                         focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFFb83058))),
+                            borderSide: BorderSide(color: Colors.black45)),
                         hintText: "mobile".tr,
                         hintStyle: const TextStyle(
-                          height: 1,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black45,
+
+                         letterSpacing: 0.2,
+                            fontSize: 17,
+                             color: Colors.black45,
                             fontFamily: 'Montserrat-Medium',
                           //  fontStyle: FontStyle.normal
                             ),
                         prefixIcon: SvgPicture.asset(
                           "assets/Phone.svg",
-                          color: Colors.black54,
-                          height: 5,
-                          width: 5,
+                          color: Colors.black45,
+                          height: 5.5,
+                          width: 5.5,
                           fit: BoxFit.scaleDown,
                         ),
                         border: const OutlineInputBorder(
@@ -81,23 +95,23 @@ class _MobileNumberState extends State<MobileNumber> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(left: 25.0,right: 25),
+              padding: EdgeInsets.only(left: 12.0,bottom: 40),
               child: Text(
                 "otp".tr,
                 style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w200,
-                    color: Colors.black87,
-                    fontFamily: 'Montserrat',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black54,
+                    fontFamily: 'Montserrat-Medium',
                    // fontStyle: FontStyle.normal
                 ),
               ),
             ),
-            const Spacer(),
+
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
                 Text(''),
+                Spacer(),
                 GestureDetector(
                   onTap: (){
                     Get.offAllNamed("/officerLogin");
@@ -106,22 +120,24 @@ class _MobileNumberState extends State<MobileNumber> {
                     "o_login".tr,
                     style: TextStyle(
                       fontSize: 16,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Montserrat-Medium',
+                      fontWeight: FontWeight.w400,
                       color: Colors.transparent,
                       shadows: [
-                        Shadow(offset: Offset(0, -8), color: Colors.blue)
+                        Shadow(offset: Offset(0, -3), color: Colors.blueAccent.shade400)
                       ],
                       // Step 3 SEE HERE
                       decoration: TextDecoration.underline,
-                      decorationColor: Colors.blue,
+
+                      decorationColor:Colors.blueAccent.shade400,
+                      decorationThickness: 1.5
 
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 25,)
+
           ],
         ),
       );

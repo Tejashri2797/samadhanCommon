@@ -25,6 +25,7 @@ DateTime? date;
 List<CitizenGrievanceImage> uploadedFile=[];
 String? docPath;
 String? status;
+int? grId;
 
 TrackGrievanceByIdRepo trackGrievanceByIdRepo=TrackGrievanceByIdRepo();
 
@@ -49,6 +50,7 @@ class TrackGrievanceByIDVM extends GetxController{
     }
   for (var element in grievanceList2) {
    GrievanceId = element.grievanceNo ;
+   grId = element.grievanceId;
    department = element.departmentName;
    office = element.officeName;
    userName = element.name;

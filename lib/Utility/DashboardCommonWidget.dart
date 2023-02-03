@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 Widget drawerBox(
         {String icon = 'assets/Post Grievance Grey.svg',
@@ -7,8 +8,7 @@ Widget drawerBox(
     ListTile(
       leading: SvgPicture.asset(
         icon,
-        //scale: 0.8,
-        height: 25,
+          height: 25,
         color: Color(0xFFb83058)
       ),
       title: Text(
@@ -27,43 +27,44 @@ Widget profileListTile(
     ListTile(
       leading: SvgPicture.asset(
         iconImagePath,
-        height: 18,
-        width: 18,
+        height: 20,
+        width: 22,
       ),
       title: Text(
         iconImageText,
         style: TextStyle(
             fontSize: 15,
-            color: Colors.grey.shade700,
+            color: Colors.black54,
+            height: 1.3,
             fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w500),
+
+        ),
       ),
     );
 
-Widget dashboardGridContainer(
-  BuildContext context, {
+Widget dashboardGridContainer(BuildContext context, {
   String imageIconPath = 'assets/Post Grievance.svg',
-  String imageIconText = 'Post \nGrievance',
+  String imageIconText = 'Post Grievance',
 }) =>
     Container(
-      height: MediaQuery.of(context).size.height/5,
-     width: MediaQuery.of(context).size.width/2.5,
+      height: MediaQuery.of(context).size.height/4.95,
+     width: MediaQuery.of(context).size.width/2.55,
 
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(30),
         boxShadow: const [
           BoxShadow(
-              color: Color(0x15b83058),
-// blurStyle:BlurStyle.inner,
-              blurRadius: 8,
-              spreadRadius: 1,
-              offset: Offset(0, 8))
+              color: Colors.black12,
+
+              blurRadius: 5,
+              spreadRadius: 2,
+             )
         ],
       ),
       child: Padding(
         padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 10,
+            left: MediaQuery.of(context).size.width /15,
             top: MediaQuery.of(context).size.height /50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,15 +72,18 @@ Widget dashboardGridContainer(
           children: [
             SvgPicture.asset(
               imageIconPath,
-              height: 45,
+              height: 48,
               width: 40,
             ),
             Text(
               imageIconText,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Montserrat-',
-                  fontSize: 16),
+
+              style: const TextStyle(
+                height: 1.3,
+                  color: Colors.black87,
+               fontWeight: FontWeight.w400,
+                  fontFamily: 'Montserrat-Medium',
+                  fontSize: 15),
             )
           ],
         ),

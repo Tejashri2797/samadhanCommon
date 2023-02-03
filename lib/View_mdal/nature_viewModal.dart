@@ -11,11 +11,6 @@ class NatureViewModal extends GetxController{
   List<NatureModalClass> natureList=[];
   var isLoading = true.obs;
 
-  @override
-  void onInit(){
-    super.onInit();
-    getNatureGrievance();
-  }
   getNatureGrievance() async {
     var natureData = await natureRepository.getNatureApi();
     print(natureData);

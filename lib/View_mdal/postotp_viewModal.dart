@@ -1,10 +1,7 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:samadhan/View_mdal/signup_viewmodal.dart';
 import '../Modal/otp_postModal.dart';
 import '../Repository/otp_Repository.dart';
 import '../Repository/otppost_repository.dart';
-
 import '../Utility/TextFieldControllerFile.dart';
 
 String commonVersion = "1.1";

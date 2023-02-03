@@ -1,0 +1,8 @@
+flutter_native_splash:
+
+
+  fullScreen: true
+  background_image: assets/SplashScreen/samadhansplash.jpg
+
+  android: true
+  ios: true

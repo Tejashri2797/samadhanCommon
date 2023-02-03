@@ -23,7 +23,7 @@ class PostFeedbackModal {
   String? comment;
   int? isSatisfied;
   int? dSatisfactnReason;
-  int? createdBy;
+  String? createdBy;
 
   factory PostFeedbackModal.fromJson(Map<String, dynamic> json) => PostFeedbackModal(
     id: json["id"],

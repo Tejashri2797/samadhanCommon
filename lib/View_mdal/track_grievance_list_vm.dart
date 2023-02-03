@@ -22,6 +22,12 @@ class TrackGrievanceListVM extends GetxController{
 
       isLoading.value=false;
     }
+    else if(grievanceDetails == null){
+
+
+      isLoading.value=false;
+    }
+
     print( grievanceList.length);
     grievanceList.forEach((element) {
       GId = element.grievanceId.toString();

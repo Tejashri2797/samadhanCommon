@@ -27,7 +27,7 @@ void getValue() async {
 
   }
   else if(type == "7"){
-    Timer(const Duration(seconds:3),(){
+    Future.delayed(const Duration(seconds:3),(){
 
       Get.offAllNamed('/DashBoardScreen');
     });
@@ -45,7 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    getValue();
+
+     getValue();
     super.initState();
   }
 

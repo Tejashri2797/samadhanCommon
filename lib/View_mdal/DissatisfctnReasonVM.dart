@@ -12,11 +12,6 @@ import '../Repository/track_grievance_list.dart';
 class DissatisfactionReasonVM extends GetxController{
   List<DisatisfactionReason>  reasonList=[];
   var isLoading =true.obs;
-  @override
-  void onInit(){
-    super.onInit();
-    disatisfactnreasonList();
-  }
 
   disatisfactnreasonList()async{
     var reasonDeatils =await DisSatisfactionReasonRepo.dissatifactionReason();

@@ -1,4 +1,6 @@
 import 'package:get/get_navigation/src/root/internacionalization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 String selectedLanguage = "English";
 String english = "English";
@@ -13,9 +15,11 @@ class LocalString extends Translations {
   Map<String, Map<String, String>> get keys => {
         'en_US': {
           "english": "English",
+          "editMobileNum":"Edit Mobile No.",
           "marathi": "Marathi",
-          "login": "Login",
-          "signUp": "SignUp",
+          "login": "LOGIN",
+          "signUp": "SIGNUP",
+          "signUpVillage":"  Select Village",
           "mobile": "Mobile Number",
           "otp": "We will send you One Time Password (OTP)",
           "o_login": "Officer Login       ",
@@ -34,14 +38,14 @@ class LocalString extends Translations {
           "mobNo": "Enter Mobile Number",
           "mobNoToaster": " Mobile No already Exist",
           "loginToaster": "Login Successfully",
-          "hello": "Hello..",
+          "hello": "Hello ,",
           "postGrievance": "Post Grievance",
           "trackGrievance": "Track Grievance",
           "submitFeedback": "Submit Feedback",
           "contact": "Contact Us",
-          "postGrievanceD": "Post \nGrievance",
+          "postGrievanceD": "Post Grievance",
           "trackGrievanceD": "Track \nGrievance",
-          "submitFeedbackD": "Submit \nFeedback",
+          "submitFeedbackD": "Submit Feedback",
           "contactD": "Contact Us",
           "faq": "FAQ\'S",
           "logout": "Logout",
@@ -66,7 +70,7 @@ class LocalString extends Translations {
           "pgTaluka": "Taluka",
           "pgvillage": "village",
           "pgDept": "Department",
-          "pgOffice": "Office",
+          "pgOffice": "Select Office ",
           "pgNature": "Nature Of Grievance",
           "pgGrievanceDetails": "Grievance Details",
           "pgUploadDoc": " Upload image / Document",
@@ -90,16 +94,16 @@ class LocalString extends Translations {
 
           ///Track Grievance
           "search" : "Search",
-          'enter_grievance_no' : 'Enter Grievance No.',
+          'enter_grievance_no' : 'Grievance No.',
           'status':'Status',
           'view':'View',
-          'geievance_id':'Grievance Id',
+          'grievance_id':'Grievance Id',
           'submission_date_time':'Submission Date & Time',
           'file_uploaded':'File Uploaded',
           'view_file': "View File",
 
           ///Submit Feedback
-          "grievanceid" : "Grievance Id",
+          "grievanceid" : "Grievance No",
           "resolved" : "Resolved",
           "submissiond&t" : "Submission Date & Time",
           "naturegrievance" : "Nature Of Grievance",
@@ -133,11 +137,13 @@ class LocalString extends Translations {
           "english": "इंग्रजी",
           "marathi": "मराठी",
           "login": "लॉगिन करा",
+          "editMobileNum":"मोबाइल क्रमांक संपादित करा.",
           "signUp": "साइनअप करा",
           "mobile": "मोबाइल नंबर",
           "otp": "आम्ही तुम्हाला वन टाइम पासवर्ड (OTP) पाठवू.",
           "o_login": "अधिकारी लॉगिन       ",
           "userName": "  नाव",
+          "signUpVillage":"  गाव निवडा",
           "email": " ई-मेल आयडी",
           "district": " जिल्हा निवडा",
           "taluka": "तालुका निवडा",
@@ -152,7 +158,7 @@ class LocalString extends Translations {
           "mobNo": " मोबाईल नंबर टाका",
           "mobNoToaster": "मोबाईल नंबर आधीच अस्तित्वात आहे",
           "loginToaster": "यशस्वीरित्या लॉगइन केले",
-          "hello": "नमस्कार..",
+          "hello": "नमस्कार ,",
           "postGrievance": "तक्रार नोंद",
           "trackGrievance": "तक्रारची स्थिती",
           "submitFeedback": "अभिप्राय सबमिट करा",
@@ -184,7 +190,7 @@ class LocalString extends Translations {
           "pgTaluka": "तालुका",
           "pgvillage": "गाव",
           "pgDept": "विभाग",
-          "pgOffice": "ऑफीस",
+          "pgOffice": "ऑफीस िवडा",
           "pgNature": "तक्रारीचे स्वरूप",
           "pgGrievanceDetails": "तक्रार तपशील",
           "pgUploadDoc": "प्रतिमा / दस्तऐवज अपलोड करा",
@@ -211,7 +217,7 @@ class LocalString extends Translations {
           'enter_grievance_no' : 'तक्रार क्र. टाका ',
           'status':'स्थिती',
           'view':'पाहा',
-          'geievance_id':'तक्रार नंबर',
+          'grievance_id':'तक्रार नंबर',
           'submission_date_time':'सबमिशनची तारीख आणि वेळ',
           'file_uploaded':'फाइल अपलोड केली',
           'view_file':'फाइल पाहा',

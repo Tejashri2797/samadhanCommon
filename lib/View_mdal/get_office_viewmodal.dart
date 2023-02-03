@@ -10,11 +10,11 @@ class GetOfficeByIdViewModal extends GetxController {
 
   getOfficeByDepartment(String value)async{
     var officeList = await GetOfficeByDeptIdRepo.getOfficeById(value);
-
+    print(officeList);
     if(officeList != null){
       grievanceOfficeList = officeList;
       isLoading.value = false;
     }
-   print(grievanceOfficeList[0].name.toString());
+   print(grievanceOfficeList);
   }
 }

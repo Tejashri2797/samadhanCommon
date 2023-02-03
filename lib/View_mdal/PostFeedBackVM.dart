@@ -1,12 +1,11 @@
 
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
-import '../Modal/PostGrievanceModal.dart';
 import '../Modal/SubmitFeedBackModal.dart';
 import '../Repository/PostFeedBackRepo.dart';
-import '../Repository/PostGrievanceRepo.dart';
-import '../View/PostGrievance.dart';
+import '../View/OTPTabbar.dart';
+import '../View/SubmitFeedback1.dart';
+import 'feedback_details_vm.dart';
 
 class PostFeedBackVM extends GetxController {
 
@@ -19,18 +18,31 @@ class PostFeedBackVM extends GetxController {
     // postGrievanceInfo(postGrievanceModal);
   }
 
-  postFeedbackInfo(PostFeedbackModal postFeedbackModal) async  {
+  feedbackSatisfied(PostFeedbackModal postFeedbackModal) async  {
     await PostFeedBackRepo.postData(
-        1,
-       112,
-        "comment",
         0,
+        GrievanceId!.toString(),
+        commentController.text,
+        1,
         0 ,
-        1
+        data.read('profileId')
     );
 
 
   }
+  feedbackDisSatisfied(PostFeedbackModal postFeedbackModal) async  {
+    await PostFeedBackRepo.postData(
+       0,
+       GrievanceId!.toString(),
+        commentController.text,
+        1,
+        int.parse(reason!) ,
+        data.read('profileId')
+    );
+
+
+  }
+
 
 
 

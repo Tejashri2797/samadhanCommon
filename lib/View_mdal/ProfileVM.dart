@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+
 import '../Modal/ProfileModal.dart';
 import '../Repository/ProfileRepo.dart';
 import 'otp_viewmodal.dart';
@@ -11,10 +12,12 @@ String? taluka;
 String? village;
 int? userId;
 String? MobileNumber;
+int? updateTalukaId;
+int? updatevillageId;
 
 class ProfileVM extends GetxController{
   List<ProfileModal>  profileDetails=[];
-  var isLoading =true.obs;
+  var isLoading = true.obs;
 
   @override
   void onInit()  {
@@ -27,7 +30,9 @@ class ProfileVM extends GetxController{
  print(details);
     if(details != null){
       profileDetails=details;
-      isLoading.value=false;
+
+      isLoading.value = false;
+
     }
 
 
@@ -40,6 +45,8 @@ class ProfileVM extends GetxController{
       taluka = element.taluka;
       village = element.village;
       userId = element.id;
+      updateTalukaId=element.talukaId;
+      updatevillageId=element.villageId;
 
     });
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -54,7 +56,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 child: Center(
                   child: SvgPicture.asset(
                     "assets/Language White.svg",
-                    height: 100,
+                    height: 90,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -62,19 +64,20 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height /4.5,
+                top: MediaQuery.of(context).size.height /5.5,
               ),
               child: Center(
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 1.59,
-                  width: MediaQuery.of(context).size.width / 1.21,
+                  height: MediaQuery.of(context).size.height / 1.70,
+                  width: MediaQuery.of(context).size.width / 1.25,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: const [
                         BoxShadow(
-                          color: Colors.black45,
-                          blurRadius: 6,
+                          color: Colors.black26,
+                          blurRadius: 3,
+                          spreadRadius: 2
                         )
                       ]),
                   child: Column(
@@ -88,10 +91,11 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                         child: Text(
                           "Choose Language",
                           style: TextStyle(
-                            fontSize: 19,
-                            // fontWeight: FontWeight.w600,
+                            letterSpacing: 0.3,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
                             color: Color(0xFFb83058),
-                            fontFamily: 'Montserrat-Medium',
+                            fontFamily: 'Montserrat-Black',
                            //  fontWeight: FontWeight.w500
                           ),
                         ),
@@ -100,7 +104,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                         height: 45,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 25.0,right: 25),
+                        padding: const EdgeInsets.only(left: 30.0,right: 30),
                         child: GestureDetector(
                           onTap: () async {
                             locale = const Locale('en','US');
@@ -110,13 +114,16 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                             pref.setString('language', selectedLanguage);
                           },
                           child: Container(
-                            height: 43,
+                            height: 50,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: (selectedLanguage == marathi)
-                                      ? Colors.black26
-                                      : const Color(0xFFb83058)),
-                              borderRadius: BorderRadius.circular(7),
+                                      ? Colors.black26:
+                                  (selectedLanguage == english)?
+                                       const Color(0xFFb83058):
+                                  Colors.black26
+                              ),
+                              borderRadius: BorderRadius.circular(5),
                             ),
                             child: Row(
                               children: [
@@ -126,25 +133,31 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                                       activeColor: const Color(0xFFb83058),
                                       value: english,
                                       groupValue: selectedLanguage,
-                                      onChanged: (val) {
-                                        setState(() {
+                                      onChanged: (val)  {
+                                        setState(()  {
                                           selectedLanguage = val.toString();
 
                                         });
+
                                       }),
                                 ),
 
                                 Text(
                                   "English",
-                                  style: (selectedLanguage== marathi)? TextStyle(
+                                  style: (selectedLanguage == marathi)? TextStyle(
                                     color: Colors.grey.shade600,
                                     fontSize: 14,
-                                    fontFamily: 'Montserrat',
-                                  ):const TextStyle(
+                                    fontFamily: 'Montserrat-Medium',
+                                  ):(selectedLanguage== english)?const TextStyle(
                                       color:Color(0xFFb83058),
                                       fontSize: 14,
-                                      fontFamily: 'Montserrat-Regular',
+                                      fontFamily: 'Montserrat-Medium',
                                       fontWeight: FontWeight.w500
+                                  ):
+                                  TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 14,
+                                    fontFamily: 'Montserrat-Medium',
                                   ),
                                 )
                               ],
@@ -154,9 +167,9 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 25.0,
-                            right: 25.0,
-                            top: 10
+                            left: 30.0,
+                            right: 30.0,
+                            top: 15
                         ),
                         child: GestureDetector(
                           onTap: () async {
@@ -170,13 +183,15 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                             }
                           },
                           child: Container(
-                            height: 43,
+                            height: 50,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: (selectedLanguage == english)
                                       ? Colors.black26
-                                      : const Color(0xFFb83058)),
-                              borderRadius: BorderRadius.circular(8),
+                                      : (selectedLanguage == marathi)?const Color(0xFFb83058):
+                                  Colors.black26
+                              ),
+                              borderRadius: BorderRadius.circular(5),
                             ),
                             child: Row(
                               children: [
@@ -186,16 +201,13 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                                       activeColor: const Color(0xFFb83058),
                                       value: marathi,
                                       groupValue: selectedLanguage,
-                                      onChanged: (val) {
+                                      onChanged: (val) async {
                                         setState(() {
                                           selectedLanguage = val.toString();
-                                            locale = const Locale('mr','IN');
-                                            Get.updateLocale(locale!);
-
-
-
                                         });
-                                      },
+
+                                        }
+
                                   ),
                                 ),
                                 Text(
@@ -204,11 +216,16 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                                     color: Colors.black54,
                                     fontSize: 14,
                                     fontFamily: 'Montserrat',
-                                  ):const TextStyle(
+                                  ): (selectedLanguage== marathi)?const TextStyle(
                                       color:Color(0xFFb83058),
                                       fontSize: 14,
                                       fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w500
+                                  ):
+                                 const TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 14,
+                                    fontFamily: 'Montserrat-Black',
                                   ),
                                 )
                               ],
@@ -224,15 +241,24 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 1.20),
+                  top: MediaQuery.of(context).size.height / 1.30),
               child: Center(
                 child: GestureDetector(
                   onTap: () async {
+                    if(selectedLanguage == ""){
+                    toastMessage('Choose Language');}
+                    else {
+                      setState(() {
 
-                   await getLanguage().then((value) => {
-                     value ? Get.offAllNamed("/DashBoardScreen"): Get.offAllNamed('/loginAndSignUp')
-                    });
-
+                      });
+                      await getLanguage().then((value) =>
+                      {
+                        value ?Timer(Duration(seconds: 3), () {
+                          Get.offAllNamed("/DashBoardScreen");
+                        }) : Get
+                            .offAllNamed('/loginAndSignUp')
+                      });
+                    }
 
 
 
@@ -248,27 +274,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 ),
               ),
             ),
-            /*Container(
-              height: MediaQuery.of(context).size.height / 0.5,
-              alignment: Alignment.bottomCenter,
-              padding: const EdgeInsets.only(bottom: 6),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
 
-                children:  const [
-                  Text(
-                    "Powered By : ",
-                    style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: 'Montserrat'),
-
-                  ),
-                  Image(image: AssetImage("assets/img.png"),height: 20,)
-                ],
-              ),
-            )*/
           ],
         ),
       ),

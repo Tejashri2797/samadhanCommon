@@ -9,12 +9,6 @@ DistrictRepository districtRepository=DistrictRepository();
 class DistrictViewModal extends GetxController{
   List<DistrictModalClass>  districtList=[];
   var isLoading =true.obs;
-  @override
-  void onInit(){
-    super.onInit();
-    //getAllDistrict();
-  }
-
   getAllDistrict()async{
     var districtDetails =await districtRepository.getDistrictData();
     print(districtDetails);
@@ -22,6 +16,6 @@ class DistrictViewModal extends GetxController{
       districtList=districtDetails;
       isLoading.value=false;
     }
-    print(districtList[0].district);
+
   }
 }

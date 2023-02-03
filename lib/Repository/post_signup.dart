@@ -60,6 +60,7 @@ class PostAPI {
 
       if (request.statusCode == 200) {
         print(request.statusCode);
+        print(data);
 
         Map temp= jsonDecode(utf8.decode(request.bodyBytes));
         print(temp);

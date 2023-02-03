@@ -11,15 +11,16 @@ class OtpInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 45,
-      width: 45,
+      height: 50,
+      width: 50,
       child: TextField(
 
         style: const TextStyle(
             color: Color(0xFFb83058),
             fontWeight: FontWeight.bold,
             fontSize: 22),
-        autofocus: autoFocus,
+        //autofocus: autoFocus,
+
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         controller: controller,
@@ -31,7 +32,7 @@ class OtpInput extends StatelessWidget {
           focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xFFb83058), width: 2)),
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(7),
+              borderRadius: BorderRadius.circular(4),
           ),
           counterText: '',
           hintStyle: const TextStyle(color: Colors.black, fontSize: 20.0),

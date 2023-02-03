@@ -13,7 +13,7 @@ String? GrId;
 String? date4;
 class SubmitFeedbackVM extends GetxController{
   List<SubmitFeedbackModal>  feedbackList=[];
-  var isLoading =true.obs;
+  RxBool isLoading = true.obs;
   @override
   void onInit(){
     super.onInit();
@@ -25,7 +25,11 @@ class SubmitFeedbackVM extends GetxController{
     print(grievanceDetails);
     if(grievanceDetails != null){
       feedbackList=grievanceDetails;
-      isLoading.value=false;
+      isLoading.value = false;
+    }
+   else if(grievanceDetails == null){
+
+      isLoading.value = false;
     }
 
     feedbackList.forEach((element) {

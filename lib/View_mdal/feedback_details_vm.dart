@@ -6,7 +6,7 @@ import '../Modal/feedback_detailModal.dart';
 import '../Repository/feedbackDetailsRepo.dart';
 
 String? GrNo;
-String? GrievanceId;
+int? GrievanceId;
 String? department;
 String? office;
 String? userName;
@@ -42,6 +42,7 @@ class FeedbackDetailsVM extends GetxController{
     }
     for (var value in feedbackDetailsList) {
       GrNo= value.grievanceNo;
+      GrievanceId=value.grievanceId;
       department= value.departmentName;
       office = value.officeName;
       userName = value.name;

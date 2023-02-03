@@ -14,11 +14,6 @@ class NotificatinDetailsVM extends GetxController{
   List<NotificationDetailModal> notificationList=[];
 
   var isLoading =true.obs;
-  @override
-  void onInit(){
-    super.onInit();
-    //getGrievanceList(GId!);
-  }
 
   notificationData(String id)async{
     var details = await NotificationDetailsRepo.notificationData(id);
@@ -27,6 +22,9 @@ class NotificatinDetailsVM extends GetxController{
 
       notificationList =  details;
 
+      isLoading.value=false;
+    }
+    if(details == null){
       isLoading.value=false;
     }
 

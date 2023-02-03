@@ -13,11 +13,7 @@ class officerDepartmentVM extends GetxController{
   List<DepartmentModalClass> departmentList=[];
   var isLoading = true.obs;
 
-  @override
-  void onInit(){
-    super.onInit();
-    getDepartment();
-  }
+
 
 
   getDepartment() async {

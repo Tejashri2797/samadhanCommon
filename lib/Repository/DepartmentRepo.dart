@@ -10,13 +10,9 @@ import '../Modal/department_modal.dart';
 List<DepartmentModalClass> depDetailsList = [];
 
 class DepartmentRepo{
-  static final queryParameters ={
-    "flag_lang" : "1",
-  };
-
 
   static Uri uri = Uri.http("samadhan-api.mahamining.com",
-      "/samadhan/commondropdown_App/GetAllDepartment",DepartmentRepo.queryParameters);
+      "samadhan/commondropdown/GetAllDepartment");
 
 @override
   getDepartmentApi() async {
@@ -33,6 +29,7 @@ class DepartmentRepo{
         depDetailsList.add(DepartmentModalClass(
           id: v['id'],
           departmentName: v['departmentName'].toString(),
+          m_DepartmentName: v['m_DepartmentName'].toString(),
         ));
       });
       return depDetailsList;

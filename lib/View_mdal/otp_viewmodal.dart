@@ -13,15 +13,7 @@ class OTPViewModal extends GetxController{
 
 
   List<OTPModalClass> otpList=[];
-
   var isLoading = true.obs;
-
-  @override
-  void onReady(){
-    super.onReady();
-    //getOTPInformation(mobileNumberController.text!);
-
-  }
 
   getOTPInformation(String mob) async{
     var details = await OTPRepository.getOTPFromApi(mob!)  ;

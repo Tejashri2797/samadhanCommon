@@ -27,9 +27,9 @@ class SignUpViewModal extends GetxController {
         userName.text,
         usermobileNo.text,
         int.parse(selectedDistrictValue!),
-        int.parse(selectedTalukaValue!),
-        int.parse(selectedVillageValue!),
-        email.text,
+       selectedTalukaRange!,
+       selectedVillageRange!,
+       email.text,
         userTypeId,
         deviceTypeId,
     );

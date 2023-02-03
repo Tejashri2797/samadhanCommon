@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:samadhan/service/NetworkBinding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Utility/CommonString.dart';
 import 'View/ContactUs.dart';
@@ -21,10 +21,10 @@ import 'View/ProfileScreen.dart';
 import 'View/Splash_Screen.dart';
 import 'View/SubmitFeedback.dart';
 import 'View/SubmitFeedback1.dart';
-import 'View/SubmitFeedback2.dart';
 import 'View/TrackGrievance.dart';
 import 'View/TrackGrievanceSearch.dart';
 import 'View/TrackGrievanceViewPage.dart';
+import 'View/UpdateProfile.dart';
 import 'View/gr_received_resolved.dart';
 import 'View/grievance_received1.dart';
 import 'View/officewise_report.dart';
@@ -36,8 +36,8 @@ import 'View/talukawise_report.dart';
 
 
 
-/// updated
-String? selectedLanguage;
+/// 15-02-2023
+String? langSelection;
 
 Future<String> getLanguage() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
@@ -48,18 +48,25 @@ Future<void> main() async {
 
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  getLanguage().then((value) => {
-    selectedLanguage = value,
-   print(selectedLanguage),
+///LandscapeMode Off
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  /// Status bar Color
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Color(0xFFb83058), // status bar color
+  ));
+   getLanguage().then((value) => {
+    langSelection = value,
+   print(langSelection),
     runApp( GetMaterialApp(
-    //initialBinding: NetworkBinding(),
-    theme: ThemeData(
+
+      theme: ThemeData(
         brightness: Brightness.light, primaryColor: const Color(0xFFb83058)),
     translations: LocalString(),
     debugShowCheckedModeBanner: false,
-    locale: (selectedLanguage == 'English')
+    locale: (langSelection == 'English')
         ? const Locale('en', "US")
-        : (selectedLanguage == 'Marathi')
+        : (langSelection == 'Marathi')
             ? const Locale('mr', "IN")
             : const Locale('en', "US"),
 
@@ -75,7 +82,7 @@ Future<void> main() async {
       GetPage(name: '/OTP_Page', page: () => const OTPTabPage()),
       GetPage(name: '/DashBoardScreen', page: () => const DashBoardScreen()),
       GetPage(name: '/OfficerDashboard', page: () => const OfficerDashboard()),
-      GetPage(name: '/PostGrievance1', page: () => const PostGrievance1()),
+      GetPage(name: '/PostGrievanceCitizen', page: () => const PostGrievance1()),
       GetPage(name: '/SubmitFeedback', page: () => const SubmitFeedback()),
       GetPage(name: '/TrackGrievance', page: () => const TrackGrievance()),
       GetPage(
@@ -85,7 +92,6 @@ Future<void> main() async {
           name: '/TrackGrievanceViewPage',
           page: () => const TrackGrievanceViewPage()),
       GetPage(name: '/SubmitFeedback1', page: () => const SubmitFeedback1()),
-      GetPage(name: '/SubmitFeedback2', page: () => const SubmitFeedback2()),
       GetPage(name: '/FAQ', page: () => const FAQ()),
       GetPage(name: '/ContactUsScreen', page: () => const ContactUsScreen()),
       GetPage(
@@ -107,9 +113,8 @@ Future<void> main() async {
           name: '/GrievanceRecievedResolved',
           page: () => const GrievanceRecievedResolved()),
       GetPage(name: '/OfficerProfile', page: () => const OfficerProfile()),
-      GetPage(
-          name: '/PostGrievanceScreen',
-          page: () => const PostGrievanceScreen()),
+      GetPage(name: '/PostGrievanceScreen', page: () => const PostGrievanceScreen()),
+      GetPage(name: '/UpdateProfile', page: () => const UpdateProfile()),
     ],
   ))});
 }

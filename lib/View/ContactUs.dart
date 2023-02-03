@@ -55,23 +55,23 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   left: MediaQuery.of(context).size.width/15,right: MediaQuery.of(context).size.width/15,top: MediaQuery.of(context).size.height/7
               ),
               child: Container(
-                height: MediaQuery.of(context).size.height / 1.25,
+                height: MediaQuery.of(context).size.height / 1.4,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.shade200,
+                        color: Colors.grey.shade400,
                         // blurStyle:BlurStyle.outer,
-                        blurRadius: 8,
-                        spreadRadius: 1,
-                        offset: const Offset(0, 5)),
+                        blurRadius: 3,
+
+                       ),
                   ],
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Column(
                   children: [
-                       SizedBox(height:40,),
+                       const SizedBox(height:40,),
                         SvgPicture.asset('assets/Contact Us pink.svg',height: MediaQuery.of(context).size.height/9,),
                           SizedBox(height: MediaQuery.of(context).size.height/20,),
                          Padding(
@@ -79,7 +79,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             child: Text('contactus_desc'.tr,style: const TextStyle(
                                 fontFamily: 'Montserrat-Medium',
                                 fontSize: 15,
-                                color: Colors.black87,
+                                color: Colors.black,
                                 height: 1.5
                             ),),
                           ),
@@ -103,10 +103,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               child:
                                   InkWell(
                                     onTap: () async {
-                                      await launchUrl(Uri.parse('tel:+1800-120-8040'));
+                                      await launchUrl(Uri.parse('tel:02472-227301'));
                                     },
                                     child: Center(
-                                      child: Text('   1800 120 8040',style: TextStyle(
+                                      child: Text('   02472-227301',style: TextStyle(
                                         fontSize: 20,
                                         color: Colors.green.shade600,
                                         fontFamily: 'Montserrat',

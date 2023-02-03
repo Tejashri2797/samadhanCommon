@@ -9,7 +9,6 @@ String? id;
 
 class TalukaViewModal extends GetxController{
   List<TalukaModalClass>  talukaList=[];
-  List<TalukaModalClass>  talukaListPG=[];
   var isLoading =true.obs;
   @override
   void onInit(){
@@ -26,11 +25,7 @@ class TalukaViewModal extends GetxController{
 
       isLoading.value=false;
     }
-    if(talukaDetails != null){
-      talukaListPG=talukaDetails;
 
-      isLoading.value=false;
-    }
 
 
 

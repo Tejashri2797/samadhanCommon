@@ -9,14 +9,10 @@ import '../Modal/get_grievanceModal.dart';
 ResolvedRepository resolvedRepository = ResolvedRepository();
 
 class ResolvedViewModal extends GetxController{
-  List<GetGrievanceResolvedModal> resolvedList=[];
+  List<GetGrievanceResolvedModal> resolvedList = [];
   var isLoading = true.obs;
 
-  @override
-  void onInit(){
-    super.onInit();
-    getResolved();
-  }
+
 
   getResolved() async {
     var resolvedData = await resolvedRepository.getResolveddata();

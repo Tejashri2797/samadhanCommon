@@ -16,22 +16,17 @@ class TrackGrievanceList {
 
   static var  queryParameters;
 
-
-  static Uri uri = Uri.http('samadhan-api.mahamining.com',
-      '/samdhan/Grievance_App/GetTrackGrievance_App', TrackGrievanceList.queryParameters);
-
-
-
-
- static grievanceListData(String statusId,String createdBy) async {
+  static grievanceListData(String statusId,String createdBy) async {
       queryParameters = {
-
-     "GrievanceStatusId": statusId,
+        "GrievanceStatusId": statusId,
      "CreatedBy": createdBy,
 
 
    };
-    try{
+
+      try{
+        Uri uri = Uri.http('samadhan-api.mahamining.com',
+            '/samdhan/Grievance_App/GetTrackGrievance_App', TrackGrievanceList.queryParameters);
       print(uri);
       http.Response response =(await http.get(uri));
       if(response.statusCode == 200){

@@ -14,17 +14,20 @@ class PostGrievanceVM extends GetxController {
    // postGrievanceInfo(postGrievanceModal);
   }
 
+
+
+
   postGrievanceInfo(PostGrievanceModal postGrievanceModal) async  {
     await PostGrievanceRepo.postGrievanceData(
     int.parse(" ${data.read('profileId')}"),
       "", 
       int.parse(selectedDistrictValue!),
-      int.parse(selectedTalukaValueG!),
+      selectedTalukaIndex!,
        0,
-      int.parse(selectedVillageValueG!),
-      int.parse(selectedDepartmentValue!),
-      int.parse(selectedOfficeValue!),
-     int.parse(selectedNatureValue!),
+      selectedVillageIndex!,
+      selectedDepartmentIndex!,
+      selectedOfficeIndex!,
+      selectdNatureIndex!,
       description.text,
       1,
       profileName!,
