@@ -334,6 +334,7 @@ bool postGrievance = false;
                                             child: DropdownButtonFormField2(
 
                                               decoration: InputDecoration(
+
                                                 fillColor: Colors.white,
                                                   filled: true,
 
@@ -382,9 +383,11 @@ bool postGrievance = false;
                                                         selectedDistrictValue);
                                                   }),
                                               dropdownDecoration: BoxDecoration(
-                                                  border: Border.all(color: Colors.black54)
+                                                  border: Border.all(color: Colors.black54),
+                                                
                                               ),
                                               buttonHeight: 40,
+                                              dropdownOverButton: true,
                                               buttonWidth: MediaQuery.of(context).size.width,
                                               itemHeight: 45,
                                               dropdownMaxHeight:MediaQuery.of(context).size.height/0.6 ,

@@ -53,6 +53,7 @@ bool otpLoading = false;
     // TODO: implement initState
     super.initState();
     fToast.init(context);
+    selectedIndex=0;
     mobileNumberController.clear();
     talukaViewModal.talukaList.clear();
     districtViewModal.districtList.clear();
@@ -201,17 +202,12 @@ bool otpLoading = false;
                                   .getOTPInformation(mobileNumberController.text);
                               otpViewModal.otpList;
                               (mobValidate == mobileNumberController.text)
-                                  ?(otpViewModal.isLoading.value== true)?setState(() {
-                                districtViewModal.districtList.clear();
-                                districtViewModal.isLoading.value=true;
-                                talukaViewModal.talukaList.clear();
-                                talukaViewModal.isLoading.value=true;
-                                villageViewModal.villageList.clear();
-                                villageViewModal.isLoading.value=true;
-                              }) :Get.offAllNamed("/OTP_Page")?.then((value) {
-
-                              })
-                                  : toastMessage("ValidNobToaster".tr);
+                                  ?(otpViewModal.isLoading.value== true)?const CircularProgressIndicator(color: Colors.red,) : {
+                                districtViewModal.districtList.clear(),
+                                talukaViewModal.talukaList.clear(),
+                                villageViewModal.villageList.clear(),
+                                Get.offAllNamed("/OTP_Page")}
+                              : toastMessage("ValidNobToaster".tr);
 
                             }
                             setState(() {
@@ -240,24 +236,14 @@ bool otpLoading = false;
                                                     await signUpViewModal!
                                                         .postAllInformation(
                                                             SignUpModalClass()),
-                                                    print(postMob),
+
                                                     (postMob == usermobileNo.text)
                                                         ? {
                                                       districtViewModal.districtList.clear(),
                                                       talukaViewModal.talukaList.clear(),
                                                       villageViewModal.villageList.clear(),
                                                             Get.offAllNamed(
-                                                                '/OTP_Page')?.then((_) {
-                                                                  setState(() {
-                                                                    districtViewModal.districtList.clear();
-                                                                    districtViewModal.isLoading.value=true;
-                                                                    talukaViewModal.talukaList.clear();
-                                                                    talukaViewModal.isLoading.value=true;
-                                                                    villageViewModal.villageList.clear();
-                                                                    villageViewModal.isLoading.value=true;
-
-                                                                  });
-                                                            })
+                                                                '/OTP_Page')
                                                           }
                                                         : toastMessage(
                                                             "mobNoToaster".tr),
